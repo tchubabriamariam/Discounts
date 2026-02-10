@@ -1,0 +1,17 @@
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/bin/Debug/net8.0/Discounts.Persistance.deps.json
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/bin/Debug/net8.0/Discounts.Persistance.runtimeconfig.json
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/bin/Debug/net8.0/Discounts.Persistance.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/bin/Debug/net8.0/Discounts.Persistance.pdb
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/bin/Debug/net8.0/Discounts.Domain.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/bin/Debug/net8.0/Discounts.Domain.pdb
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.csproj.AssemblyReference.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.GeneratedMSBuildEditorConfig.editorconfig
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.AssemblyInfoInputs.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.AssemblyInfo.cs
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.csproj.CoreCompileInputs.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discount.1E380244.Up2Date
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/refint/Discounts.Persistance.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.pdb
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.genruntimeconfig.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/ref/Discounts.Persistance.dll
