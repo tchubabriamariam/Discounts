@@ -1,8 +1,7 @@
-using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc; 
+//using Asp.Versioning;
 using Discounts.Application.DTOs;
 using Discounts.Application.Services.Interfaces;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Discounts.API.Controllers;
 
