@@ -18,5 +18,6 @@ public static class ServiceExtensions
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IGlobalSettingsRepository, GlobalSettingsRepository>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IOfferService, OfferService>();
     }
 }

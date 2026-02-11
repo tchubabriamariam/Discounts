@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PKVUy74lxvQ=",
+  "dgSpecHash": "im+I3KaDZO4=",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/Discounts.Application.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,8 @@
     "/Users/admin/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/fluentvalidation.aspnetcore/11.3.1/fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.11.0/fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/mapster/7.4.0/mapster.7.4.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/mapster.core/1.2.1/mapster.core.1.2.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.23/microsoft.aspnetcore.authentication.jwtbearer.8.0.23.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.cryptography.internal/8.0.23/microsoft.aspnetcore.cryptography.internal.8.0.23.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/8.0.23/microsoft.aspnetcore.cryptography.keyderivation.8.0.23.nupkg.sha512",

@@ -1,9 +1,12 @@
+using System.Reflection;
 using System.Text;
 using Asp.Versioning;
 using Discounts.API.Infrustructure.exctentions;
 using Discounts.Domain.Entity;
 using Discounts.Persistance;
 using Discounts.Persistance.Context;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +34,8 @@ builder.Services.AddApiVersioning(options =>
 });
 
 builder.Services.AddServices(); // this is services extention
-
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString(ConnectionString.DefaultConnection)));
