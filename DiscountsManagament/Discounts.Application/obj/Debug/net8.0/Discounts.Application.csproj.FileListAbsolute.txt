@@ -1,0 +1,16 @@
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/bin/Debug/net8.0/Discounts.Application.deps.json
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/bin/Debug/net8.0/Discounts.Application.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/bin/Debug/net8.0/Discounts.Application.pdb
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/bin/Debug/net8.0/Discounts.Domain.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/bin/Debug/net8.0/Discounts.Domain.pdb
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.csproj.AssemblyReference.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.AssemblyInfoInputs.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.AssemblyInfo.cs
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.csproj.CoreCompileInputs.cache
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.sourcelink.json
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discount.585ED959.Up2Date
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/refint/Discounts.Application.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/Discounts.Application.pdb
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/obj/Debug/net8.0/ref/Discounts.Application.dll

@@ -12,4 +12,8 @@
       <ProjectReference Include="..\Discounts.Persistance\Discounts.Persistance.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.1" />
+    </ItemGroup>
+
 </Project>

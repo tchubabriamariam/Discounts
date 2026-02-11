@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "jTnXhm16JDA=",
+  "dgSpecHash": "XxhLeLmldA8=",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/Discounts.Persistance.csproj",
   "expectedPackageFiles": [
+    "/Users/admin/.nuget/packages/asp.versioning.abstractions/8.1.0/asp.versioning.abstractions.8.1.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/asp.versioning.http/8.1.1/asp.versioning.http.8.1.1.nupkg.sha512",
+    "/Users/admin/.nuget/packages/asp.versioning.mvc/8.1.1/asp.versioning.mvc.8.1.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
     "/Users/admin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
