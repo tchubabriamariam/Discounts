@@ -16,6 +16,9 @@ public class ReservationRepository : BaseRepository<Reservation>, IReservationRe
         return await _dbSet
             .Where(r => r.UserId == userId)
             .Include(r => r.Offer)
+            .ThenInclude(o => o.Merchant)
+            .Include(r => r.Offer)
+            .ThenInclude(o => o.Category)
             .ToListAsync(cancellationToken);
     }
 

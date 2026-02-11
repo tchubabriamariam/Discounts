@@ -19,5 +19,6 @@ public static class ServiceExtensions
         services.AddScoped<IGlobalSettingsRepository, GlobalSettingsRepository>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IOfferService, OfferService>();
+        services.AddScoped<IReservationService, ReservationService>();
     }
 }

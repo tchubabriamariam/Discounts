@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text;
 using Asp.Versioning;
 using Discounts.API.Infrustructure.exctentions;
+using Discounts.API.Infrustructure.Middlewares;
 using Discounts.Domain.Entity;
 using Discounts.Persistance;
 using Discounts.Persistance.Context;
@@ -121,7 +122,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await db.Database.MigrateAsync();
 }
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
