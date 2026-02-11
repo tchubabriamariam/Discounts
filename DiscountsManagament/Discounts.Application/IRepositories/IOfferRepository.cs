@@ -1,8 +1,6 @@
 using Discounts.Domain.Entity;
 using Discounts.Domain.Enums;
-using Discounts.Infrustructure.Repositories;
-
-namespace Discounts.Infrustructure.Offers;
+namespace Discounts.Application.IRepositories;
 
 public interface IOfferRepository : IBaseRepository<Offer>
 {

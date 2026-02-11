@@ -12,3 +12,4 @@
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Domain/obj/Debug/net8.0/Discounts.Domain.pdb
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Domain/obj/Debug/net8.0/Discounts.Domain.genruntimeconfig.cache
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Domain/obj/Debug/net8.0/ref/Discounts.Domain.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Domain/obj/Debug/net8.0/Discounts.Domain.sourcelink.json

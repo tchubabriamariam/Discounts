@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Discounts.Domain.Entity;
 
-namespace Discounts.Infrustructure.Repositories;
+namespace Discounts.Application.IRepositories;
 
 public interface IBaseRepository<T> where T : BaseEntity
 {

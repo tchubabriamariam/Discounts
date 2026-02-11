@@ -1,10 +1,11 @@
+using Discounts.Application.IRepositories;
 using Discounts.Domain.Entity;
 using Discounts.Domain.Enums;
 using Discounts.Infrustructure.Repositories;
 using Discounts.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Discounts.Infrustructure.Coupons;
+namespace Discounts.Infrustructure.Repositories;
 
 public class CouponRepository : BaseRepository<Coupon>, ICouponRepository
 {

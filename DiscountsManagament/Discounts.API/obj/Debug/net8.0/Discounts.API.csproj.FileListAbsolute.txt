@@ -151,3 +151,4 @@
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.API/obj/Debug/net8.0/Discounts.API.pdb
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.API/obj/Debug/net8.0/Discounts.API.genruntimeconfig.cache
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.API/obj/Debug/net8.0/ref/Discounts.API.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.API/obj/Debug/net8.0/Discounts.API.sourcelink.json

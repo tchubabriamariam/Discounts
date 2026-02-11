@@ -1,4 +1,4 @@
-namespace Discounts.Infrustructure.GlobalSettings;
+namespace Discounts.Application.IRepositories;
 
 public interface IGlobalSettingsRepository
 {

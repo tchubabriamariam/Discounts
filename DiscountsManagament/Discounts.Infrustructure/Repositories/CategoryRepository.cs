@@ -1,9 +1,10 @@
+using Discounts.Application.IRepositories;
 using Discounts.Domain.Entity;
 using Discounts.Infrustructure.Repositories;
 using Discounts.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Discounts.Infrustructure.Categoires;
+namespace Discounts.Infrustructure.Repositories;
 public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
 {
     public CategoryRepository(ApplicationDbContext context) : base(context) { }

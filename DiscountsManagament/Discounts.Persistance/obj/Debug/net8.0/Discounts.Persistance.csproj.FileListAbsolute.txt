@@ -15,3 +15,4 @@
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.pdb
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.genruntimeconfig.cache
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/ref/Discounts.Persistance.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/obj/Debug/net8.0/Discounts.Persistance.sourcelink.json

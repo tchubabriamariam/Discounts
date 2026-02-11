@@ -1,7 +1,6 @@
 using Discounts.Domain.Entity;
-using Discounts.Infrustructure.Repositories;
 
-namespace Discounts.Infrustructure.Categoires;
+namespace Discounts.Application.IRepositories;
 
 public interface ICategoryRepository : IBaseRepository<Category>
 {

@@ -1,7 +1,8 @@
+using Discounts.Application.IRepositories;
 using Discounts.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Discounts.Infrustructure.GlobalSettings;
+namespace Discounts.Infrustructure.Repositories;
 
 public class GlobalSettingsRepository : IGlobalSettingsRepository
 {

@@ -1,7 +1,5 @@
 using Discounts.Domain.Entity;
-using Discounts.Infrustructure.Repositories;
-
-namespace Discounts.Infrustructure.Coupons;
+namespace Discounts.Application.IRepositories;
 
 public interface ICouponRepository : IBaseRepository<Coupon>
 {
