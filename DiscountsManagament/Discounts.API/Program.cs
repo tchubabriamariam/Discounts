@@ -3,6 +3,7 @@ using System.Text;
 using Asp.Versioning;
 using Discounts.API.Infrustructure.exctentions;
 using Discounts.API.Infrustructure.Middlewares;
+using Discounts.Application.Mapping;
 using Discounts.Domain.Entity;
 using Discounts.Persistance;
 using Discounts.Persistance.Context;
@@ -114,6 +115,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
+builder.Services.RegisterMaps();
 
 var app = builder.Build();
 

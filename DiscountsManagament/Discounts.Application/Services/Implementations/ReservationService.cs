@@ -29,6 +29,7 @@ public class ReservationService : IReservationService
     public async Task<ReservationResponseDto> CreateReservationAsync(string userId, CreateReservationRequestDto request, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByIdAsync(userId);
+        
         if (user is null)
         {
             throw new NotFoundException("User", userId);
@@ -40,6 +41,7 @@ public class ReservationService : IReservationService
         }
 
         var offer = await _unitOfWork.Offers.GetWithDetailsAsync(request.OfferId, cancellationToken);
+        
         if (offer is null)
         {
             throw new NotFoundException("Offer", request.OfferId);
@@ -65,8 +67,8 @@ public class ReservationService : IReservationService
             throw new InsufficientCouponsException(offer.RemainingCoupons, request.Quantity);
         }
 
-        // Check if user already has an active reservation for this offer
         var existingReservation = await _unitOfWork.Reservations.GetActiveReservationAsync(userId, request.OfferId, cancellationToken);
+        
         if (existingReservation is not null)
         {
             throw new DuplicateReservationException();
@@ -74,7 +76,6 @@ public class ReservationService : IReservationService
 
         var settings = await _unitOfWork.GlobalSettings.GetAsync(cancellationToken);
 
-        // Create the reservation
         var reservation = new Reservation
         {
             UserId = userId,
@@ -94,29 +95,15 @@ public class ReservationService : IReservationService
         _logger.LogInformation("Reservation {ReservationId} created by user {UserId} for offer {OfferId}, quantity: {Quantity}", 
             reservation.Id, userId, request.OfferId, request.Quantity);
 
-        // Manually map since we already have the offer loaded
-        var response = new ReservationResponseDto
-        {
-            Id = reservation.Id,
-            OfferId = reservation.OfferId,
-            OfferTitle = offer.Title,
-            MerchantCompanyName = offer.Merchant?.CompanyName ?? string.Empty,
-            PricePerCoupon = offer.DiscountedPrice,
-            TotalPrice = offer.DiscountedPrice * request.Quantity,
-            Quantity = reservation.Quantity,
-            Status = reservation.Status.ToString(),
-            ReservedAt = reservation.ReservedAt,
-            ExpiresAt = reservation.ExpiresAt,
-            MinutesRemaining = (int)(reservation.ExpiresAt - DateTime.UtcNow).TotalMinutes,
-            IsExpired = reservation.ExpiresAt <= DateTime.UtcNow
-        };
-
-        return response;
+        reservation.Offer = offer;
+        
+        return reservation.Adapt<ReservationResponseDto>();
     }
 
     public async Task<IEnumerable<string>> PurchaseReservationAsync(string userId, int reservationId, PurchaseReservationRequestDto request, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByIdAsync(userId);
+        
         if (user is null)
         {
             throw new NotFoundException("User", userId);
@@ -147,6 +134,7 @@ public class ReservationService : IReservationService
         }
 
         var offer = await _unitOfWork.Offers.GetWithDetailsAsync(reservation.OfferId, cancellationToken);
+        
         if (offer is null)
         {
             throw new NotFoundException("Offer", reservation.OfferId);
@@ -154,22 +142,20 @@ public class ReservationService : IReservationService
 
         var totalPrice = offer.DiscountedPrice * reservation.Quantity;
 
-        // check user balance
         if (user.Balance < totalPrice)
         {
             throw new InsufficientBalanceException(totalPrice, user.Balance);
         }
 
-        // deduct balance
         user.Balance -= totalPrice;
 
-        // generate coupons
         var coupons = new List<Coupon>();
         var couponCodes = new List<string>();
 
         for (int i = 0; i < reservation.Quantity; i++)
         {
             string couponCode;
+            
             do
             {
                 couponCode = GenerateUniqueCouponCode();
@@ -193,7 +179,6 @@ public class ReservationService : IReservationService
 
         reservation.Status = ReservationStatus.Completed;
 
-        // save everything
         await _unitOfWork.Coupons.AddRangeAsync(coupons, cancellationToken);
         _unitOfWork.Reservations.Update(reservation);
         await _userManager.UpdateAsync(user);
@@ -209,9 +194,9 @@ public class ReservationService : IReservationService
     {
         var reservations = await _unitOfWork.Reservations.GetByUserIdAsync(userId, cancellationToken);
 
-        return reservations
-            .Adapt<IEnumerable<ReservationResponseDto>>()
-            .OrderByDescending(r => r.ReservedAt);
+        var result = reservations.Adapt<IEnumerable<ReservationResponseDto>>();
+        
+        return result.OrderByDescending(r => r.ReservedAt);
     }
 
     public async Task CancelReservationAsync(string userId, int reservationId, CancellationToken cancellationToken = default)
@@ -231,9 +216,9 @@ public class ReservationService : IReservationService
         }
 
         var offer = await _unitOfWork.Offers.GetByIdAsync(reservation.OfferId, cancellationToken);
+        
         if (offer is not null)
         {
-            // Return coupons to available pol
             offer.RemainingCoupons += reservation.Quantity;
             _unitOfWork.Offers.Update(offer);
         }
@@ -260,13 +245,11 @@ public class ReservationService : IReservationService
         return reservation.Adapt<ReservationResponseDto>();
     }
 
-
     private string GenerateUniqueCouponCode()
     {
-        // unique 12-character alphanumeric code
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var random = new Random();
+        
         return new string(Enumerable.Repeat(chars, 12)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
+            .Select(s => s[Random.Shared.Next(s.Length)]).ToArray());
     }
 }
