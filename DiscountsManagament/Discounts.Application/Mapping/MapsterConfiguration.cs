@@ -1,3 +1,4 @@
+using Discounts.Application.DTOs.Categories;
 using Discounts.Application.DTOs.Coupons;
 using Discounts.Application.DTOs.Offers;
 using Discounts.Application.DTOs.Reservations;
@@ -48,5 +49,8 @@ public static class MapsterConfiguration
             .Map(dest => dest.DaysUntilExpiry, src => src.ExpiresAt > DateTime.UtcNow 
                 ? (int)(src.ExpiresAt.Date - DateTime.UtcNow.Date).TotalDays 
                 : 0);
+        // category
+        TypeAdapterConfig<Category, CategoryResponseDto>
+            .NewConfig();
     }
 }
