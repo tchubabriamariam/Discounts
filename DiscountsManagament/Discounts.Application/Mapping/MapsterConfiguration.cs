@@ -1,3 +1,4 @@
+using Discounts.Application.DTOs.Admin;
 using Discounts.Application.DTOs.Categories;
 using Discounts.Application.DTOs.Coupons;
 using Discounts.Application.DTOs.Offers;
@@ -52,5 +53,13 @@ public static class MapsterConfiguration
         // category
         TypeAdapterConfig<Category, CategoryResponseDto>
             .NewConfig();
+        
+        // admin
+        TypeAdapterConfig<ApplicationUser, UserResponseDto>
+            .NewConfig()
+            .Map(dest => dest.FullName, src => $"{src.FirstName} {src.LastName}")
+            .Map(dest => dest.Roles, src => new List<string>()) // Will be set manually in service
+            .Map(dest => dest.MerchantId, src => src.Merchant != null ? src.Merchant.Id : (int?)null)
+            .Map(dest => dest.MerchantCompanyName, src => src.Merchant != null ? src.Merchant.CompanyName : null);
     }
 }

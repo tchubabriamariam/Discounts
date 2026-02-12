@@ -22,5 +22,6 @@ public static class ServiceExtensions
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<ICouponService, CouponService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IAdminService, AdminService>();
     }
 }
