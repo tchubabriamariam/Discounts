@@ -33,13 +33,11 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
                 options.UseSqlServer(
                     hostContext.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Identity (needed for UserManager if workers need it)
+            // Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            // Infrastructure (UnitOfWork, Repositories)
-
+            // Unitofwork and repositories
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IOfferRepository, OfferRepository>();
             services.AddScoped<ICouponRepository, CouponRepository>();
