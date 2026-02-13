@@ -7,7 +7,7 @@ public class ReservationCleanupWorker : BackgroundService
 {
     private readonly ILogger<ReservationCleanupWorker> _logger;
     private readonly IServiceProvider _serviceProvider;
-    private readonly TimeSpan _interval = TimeSpan.FromMinutes(5);
+    private readonly TimeSpan _interval = TimeSpan.FromMinutes(5); // did not use schedule because this is much simpler for this case
 
     public ReservationCleanupWorker(
         ILogger<ReservationCleanupWorker> logger,

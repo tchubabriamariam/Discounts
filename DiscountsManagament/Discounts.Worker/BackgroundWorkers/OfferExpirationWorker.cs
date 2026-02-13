@@ -7,7 +7,7 @@ public class OfferExpirationWorker : BackgroundService
 {
     private readonly ILogger<OfferExpirationWorker> _logger;
     private readonly IServiceProvider _serviceProvider;
-    private readonly TimeSpan _interval = TimeSpan.FromHours(1);
+    private readonly TimeSpan _interval = TimeSpan.FromHours(1); // since offer has hours until experation i used this instead of schedule
 
     public OfferExpirationWorker(
         ILogger<OfferExpirationWorker> logger,
