@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Discounts.Infrustructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+363ab17a8d5a3710401d5761f9c86955d7ae0bc1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9270d63d13708792bc32be4e47daa19664e9e0b9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Discounts.Infrustructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Discounts.Infrustructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
