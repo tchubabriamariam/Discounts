@@ -23,5 +23,6 @@ public static class ServiceExtensions
         services.AddScoped<ICouponService, CouponService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IAdminService, AdminService>();
+        services.AddScoped<IGlobalSettingsService, GlobalSettingsService>();
     }
 }

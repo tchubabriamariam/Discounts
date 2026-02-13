@@ -1,6 +1,7 @@
 using Discounts.Application.DTOs.Admin;
 using Discounts.Application.DTOs.Categories;
 using Discounts.Application.DTOs.Coupons;
+using Discounts.Application.DTOs.GlobalSettings;
 using Discounts.Application.DTOs.Offers;
 using Discounts.Application.DTOs.Reservations;
 using Discounts.Domain.Entity;
@@ -61,5 +62,17 @@ public static class MapsterConfiguration
             .Map(dest => dest.Roles, src => new List<string>()) // Will be set manually in service
             .Map(dest => dest.MerchantId, src => src.Merchant != null ? src.Merchant.Id : (int?)null)
             .Map(dest => dest.MerchantCompanyName, src => src.Merchant != null ? src.Merchant.CompanyName : null);
+        
+        // global settings
+        TypeAdapterConfig<GlobalSettings, GlobalSettingsResponseDto>
+            .NewConfig()
+            .Map(dest => dest.UpdatedByAdminEmail, src => (string?)null); // This is set in service
+
+        TypeAdapterConfig<UpdateGlobalSettingsRequestDto, GlobalSettings>
+            .NewConfig()
+            .Ignore(dest => dest.Id)
+            .Ignore(dest => dest.UpdatedAt)
+            .Ignore(dest => dest.UpdatedByAdminId)
+            .Ignore(dest => dest.UpdatedByAdmin);
     }
 }

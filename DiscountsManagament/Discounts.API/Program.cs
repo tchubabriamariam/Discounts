@@ -115,7 +115,10 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
+
+
 builder.Services.RegisterMaps();
+//MapsterConfiguration.RegisterMaps(builder.Services); // could also write this so rider will not suggest redundant but i perfer first one
 
 var app = builder.Build();
 
