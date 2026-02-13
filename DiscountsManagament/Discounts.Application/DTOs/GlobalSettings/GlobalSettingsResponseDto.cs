@@ -1,10 +1,13 @@
-namespace Discounts.Application.DTOs.GlobalSettings;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class GlobalSettingsResponseDto
+namespace Discounts.Application.DTOs.GlobalSettings
 {
-    public int Id { get; set; }
-    public int ReservationDurationMinutes { get; set; }
-    public int MerchantEditWindowHours { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public string? UpdatedByAdminEmail { get; set; }
+    public class GlobalSettingsResponseDto
+    {
+        public int Id { get; set; }
+        public int ReservationDurationMinutes { get; set; }
+        public int MerchantEditWindowHours { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public string? UpdatedByAdminEmail { get; set; }
+    }
 }

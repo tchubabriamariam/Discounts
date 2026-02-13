@@ -1,9 +1,12 @@
-namespace Discounts.Domain.Enums;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public enum ReservationStatus
+namespace Discounts.Domain.Enums
 {
-    Active = 0,
-    Completed = 1, // Converted to a purchase
-    Expired = 2,   // Cleaned up by worker
-    Cancelled = 3
+    public enum ReservationStatus
+    {
+        Active = 0,
+        Completed = 1, // Converted to a purchase
+        Expired = 2, // Cleaned up by worker
+        Cancelled = 3
+    }
 }

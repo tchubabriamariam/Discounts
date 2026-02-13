@@ -1,18 +1,21 @@
-namespace Discounts.Domain.Entity;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class GlobalSettings
+namespace Discounts.Domain.Entity
 {
-    public int Id { get; set; }
+    public class GlobalSettings
+    {
+        public int Id { get; set; }
 
-    // How long (minutes) a reservation is held before being auto-cancelled
-    public int ReservationDurationMinutes { get; set; } = 30;
+        // How long (minutes) a reservation is held before being auto-cancelled
+        public int ReservationDurationMinutes { get; set; } = 30;
 
-    // How long (hours) a merchant can edit their offer after creation
-    public int MerchantEditWindowHours { get; set; } = 24;
+        // How long (hours) a merchant can edit their offer after creation
+        public int MerchantEditWindowHours { get; set; } = 24;
 
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    public string? UpdatedByAdminId { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public string? UpdatedByAdminId { get; set; }
 
-    // Navigation
-    public ApplicationUser? UpdatedByAdmin { get; set; }
+        // Navigation
+        public ApplicationUser? UpdatedByAdmin { get; set; }
+    }
 }

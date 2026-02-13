@@ -1,12 +1,15 @@
-namespace Discounts.Application.DTOs;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class AuthResponseDto
+namespace Discounts.Application.DTOs
 {
-    public string Token { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Role { get; set; } = string.Empty;
-    public int? MerchantId { get; set; }
-    public DateTime ExpiresAt { get; set; }
+    public class AuthResponseDto
+    {
+        public string Token { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public int? MerchantId { get; set; }
+        public DateTime ExpiresAt { get; set; }
+    }
 }

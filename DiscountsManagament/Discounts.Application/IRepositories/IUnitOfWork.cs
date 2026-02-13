@@ -1,12 +1,15 @@
-namespace Discounts.Application.IRepositories;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public interface IUnitOfWork : IDisposable
+namespace Discounts.Application.IRepositories
 {
-    IOfferRepository Offers { get; }
-    ICouponRepository Coupons { get; }
-    IReservationRepository Reservations { get; }
-    IMerchantRepository Merchants { get; }
-    ICategoryRepository Categories { get; }
-    IGlobalSettingsRepository GlobalSettings { get; }
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    public interface IUnitOfWork : IDisposable
+    {
+        IOfferRepository Offers { get; }
+        ICouponRepository Coupons { get; }
+        IReservationRepository Reservations { get; }
+        IMerchantRepository Merchants { get; }
+        ICategoryRepository Categories { get; }
+        IGlobalSettingsRepository GlobalSettings { get; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    }
 }

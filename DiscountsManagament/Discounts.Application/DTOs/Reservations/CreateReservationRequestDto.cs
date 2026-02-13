@@ -1,7 +1,10 @@
-namespace Discounts.Application.DTOs.Reservations;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class CreateReservationRequestDto
+namespace Discounts.Application.DTOs.Reservations
 {
-    public int OfferId { get; set; }
-    public int Quantity { get; set; } = 1;
+    public class CreateReservationRequestDto
+    {
+        public int OfferId { get; set; }
+        public int Quantity { get; set; } = 1;
+    }
 }

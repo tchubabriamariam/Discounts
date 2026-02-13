@@ -1,8 +1,11 @@
-namespace Discounts.Application.DTOs.Categories;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class CreateCategoryRequestDto
+namespace Discounts.Application.DTOs.Categories
 {
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public string? IconUrl { get; set; }
+    public class CreateCategoryRequestDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public string? IconUrl { get; set; }
+    }
 }

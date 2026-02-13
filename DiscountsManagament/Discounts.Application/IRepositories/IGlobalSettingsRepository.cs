@@ -1,7 +1,12 @@
-namespace Discounts.Application.IRepositories;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public interface IGlobalSettingsRepository
+using Discounts.Domain.Entity;
+
+namespace Discounts.Application.IRepositories
 {
-    Task<Domain.Entity.GlobalSettings> GetAsync(CancellationToken cancellationToken = default);
-    Task UpdateAsync(Domain.Entity.GlobalSettings settings, CancellationToken cancellationToken = default);
+    public interface IGlobalSettingsRepository
+    {
+        Task<GlobalSettings> GetAsync(CancellationToken cancellationToken = default);
+        Task UpdateAsync(GlobalSettings settings, CancellationToken cancellationToken = default);
+    }
 }

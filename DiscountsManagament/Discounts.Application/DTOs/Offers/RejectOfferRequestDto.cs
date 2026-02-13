@@ -1,6 +1,9 @@
-namespace Discounts.Application.DTOs.Offers;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class RejectOfferRequestDto
+namespace Discounts.Application.DTOs.Offers
 {
-    public string Reason { get; set; } = string.Empty;
+    public class RejectOfferRequestDto
+    {
+        public string Reason { get; set; } = string.Empty;
+    }
 }

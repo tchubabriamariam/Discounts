@@ -1,25 +1,26 @@
+// Copyright (C) TBC Bank. All Rights Reserved.
+
 using Discounts.Application.IRepositories;
 using Discounts.Domain.Entity;
-using Discounts.Infrustructure.Repositories;
 using Discounts.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Discounts.Infrustructure.Repositories;
-
-public class MerchantRepository : BaseRepository<Merchant>, IMerchantRepository
+namespace Discounts.Infrustructure.Repositories
 {
-    public MerchantRepository(ApplicationDbContext context) : base(context) { }
-
-    public async Task<Merchant?> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    public class MerchantRepository : BaseRepository<Merchant>, IMerchantRepository
     {
-        return await _dbSet
-            .FirstOrDefaultAsync(m => m.UserId == userId, cancellationToken);
-    }
+        public MerchantRepository(ApplicationDbContext context) : base(context)
+        {
+        }
 
-    public async Task<Merchant?> GetWithOffersAsync(int merchantId, CancellationToken cancellationToken = default)
-    {
-        return await _dbSet
-            .Include(m => m.Offers)
-            .FirstOrDefaultAsync(m => m.Id == merchantId, cancellationToken);
+        public async Task<Merchant?> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default) =>
+            await _dbSet
+                .FirstOrDefaultAsync(m => m.UserId == userId, cancellationToken).ConfigureAwait(false);
+
+        public async Task<Merchant?>
+            GetWithOffersAsync(int merchantId, CancellationToken cancellationToken = default) =>
+            await _dbSet
+                .Include(m => m.Offers)
+                .FirstOrDefaultAsync(m => m.Id == merchantId, cancellationToken).ConfigureAwait(false);
     }
 }

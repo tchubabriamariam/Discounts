@@ -1,17 +1,20 @@
+// Copyright (C) TBC Bank. All Rights Reserved.
+
 using Discounts.Application.DTOs;
 using FluentValidation;
 
-namespace Discounts.Application.Validators;
-
-public class LoginRequestValidator : AbstractValidator<LoginRequestDto>
+namespace Discounts.Application.Validators
 {
-    public LoginRequestValidator()
+    public class LoginRequestValidator : AbstractValidator<LoginRequestDto>
     {
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("email is required")
-            .EmailAddress().WithMessage("invalid email format");
+        public LoginRequestValidator()
+        {
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("email is required")
+                .EmailAddress().WithMessage("invalid email format");
 
-        RuleFor(x => x.Password)
-            .NotEmpty().WithMessage("password is required");
+            RuleFor(x => x.Password)
+                .NotEmpty().WithMessage("password is required");
+        }
     }
 }

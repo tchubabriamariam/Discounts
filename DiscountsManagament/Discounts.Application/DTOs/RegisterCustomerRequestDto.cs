@@ -1,10 +1,13 @@
-namespace Discounts.Application.DTOs;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class RegisterCustomerRequestDto
+namespace Discounts.Application.DTOs
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
-    public string ConfirmPassword { get; set; } = string.Empty;
+    public class RegisterCustomerRequestDto
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string ConfirmPassword { get; set; } = string.Empty;
+    }
 }

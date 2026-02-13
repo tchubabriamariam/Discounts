@@ -1,6 +1,9 @@
-namespace Discounts.Persistance;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public static class ConnectionString
+namespace Discounts.Persistance
 {
-    public const string DefaultConnection = "DefaultConnection";
+    public static class ConnectionString
+    {
+        public const string DefaultConnection = "DefaultConnection";
+    }
 }

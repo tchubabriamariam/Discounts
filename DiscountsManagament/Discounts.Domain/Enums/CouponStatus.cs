@@ -1,9 +1,12 @@
-namespace Discounts.Domain.Enums;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public enum CouponStatus
+namespace Discounts.Domain.Enums
 {
-    Active = 0,
-    Used = 1,
-    Expired = 2,
-    Cancelled = 3
+    public enum CouponStatus
+    {
+        Active = 0,
+        Used = 1,
+        Expired = 2,
+        Cancelled = 3
+    }
 }

@@ -1,6 +1,9 @@
-namespace Discounts.Application.DTOs.Coupons;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class MarkCouponAsUsedRequestDto
+namespace Discounts.Application.DTOs.Coupons
 {
-    public string Code { get; set; } = string.Empty;
+    public class MarkCouponAsUsedRequestDto
+    {
+        public string Code { get; set; } = string.Empty;
+    }
 }

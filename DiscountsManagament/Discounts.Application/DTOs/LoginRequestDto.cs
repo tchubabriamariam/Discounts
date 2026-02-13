@@ -1,7 +1,10 @@
-namespace Discounts.Application.DTOs;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class LoginRequestDto
+namespace Discounts.Application.DTOs
 {
-    public string Email { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
+    public class LoginRequestDto
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+    }
 }

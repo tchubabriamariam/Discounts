@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+// Copyright (C) TBC Bank. All Rights Reserved.
+
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 

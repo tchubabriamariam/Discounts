@@ -1,10 +1,13 @@
-namespace Discounts.Domain.Enums;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public enum OfferStatus
+namespace Discounts.Domain.Enums
 {
-    Pending = 0,
-    Approved = 1,
-    Rejected = 2,
-    Expired = 3,
-    Cancelled = 4
+    public enum OfferStatus
+    {
+        Pending = 0,
+        Approved = 1,
+        Rejected = 2,
+        Expired = 3,
+        Cancelled = 4
+    }
 }

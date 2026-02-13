@@ -1,6 +1,8 @@
-namespace Discounts.Application.DTOs.Reservations;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class PurchaseReservationRequestDto
+namespace Discounts.Application.DTOs.Reservations
 {
-    
+    public class PurchaseReservationRequestDto
+    {
+    }
 }

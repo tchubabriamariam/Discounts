@@ -1,8 +1,11 @@
-namespace Discounts.Domain.Entity;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public static class Roles
+namespace Discounts.Domain.Entity
 {
-    public const string Admin = "Admin";
-    public const string Merchant = "Merchant";
-    public const string Customer = "Customer";
+    public static class Roles
+    {
+        public const string Admin = "Admin";
+        public const string Merchant = "Merchant";
+        public const string Customer = "Customer";
+    }
 }

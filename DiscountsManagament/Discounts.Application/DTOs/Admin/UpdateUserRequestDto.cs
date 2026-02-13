@@ -1,9 +1,12 @@
-namespace Discounts.Application.DTOs.Admin;
+// Copyright (C) TBC Bank. All Rights Reserved.
 
-public class UpdateUserRequestDto
+namespace Discounts.Application.DTOs.Admin
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public decimal Balance { get; set; }
+    public class UpdateUserRequestDto
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public decimal Balance { get; set; }
+    }
 }

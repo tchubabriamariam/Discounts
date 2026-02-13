@@ -1,9 +1,14 @@
+// Copyright (C) TBC Bank. All Rights Reserved.
+
 using Discounts.Application.DTOs.GlobalSettings;
 
-namespace Discounts.Application.Services.Interfaces;
-
-public interface IGlobalSettingsService
+namespace Discounts.Application.Services.Interfaces
 {
-    Task<GlobalSettingsResponseDto> GetGlobalSettingsAsync(CancellationToken cancellationToken = default);
-    Task<GlobalSettingsResponseDto> UpdateGlobalSettingsAsync(string adminUserId, UpdateGlobalSettingsRequestDto request, CancellationToken cancellationToken = default);
+    public interface IGlobalSettingsService
+    {
+        Task<GlobalSettingsResponseDto> GetGlobalSettingsAsync(CancellationToken cancellationToken = default);
+
+        Task<GlobalSettingsResponseDto> UpdateGlobalSettingsAsync(string adminUserId,
+            UpdateGlobalSettingsRequestDto request, CancellationToken cancellationToken = default);
+    }
 }

@@ -1,3 +1,5 @@
+// Copyright (C) TBC Bank. All Rights Reserved.
+
 using Discounts.Application.IRepositories;
 using Discounts.Domain.Entity;
 using Discounts.Infrustructure.Repositories;
@@ -8,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", false, true)
     .Build();
 
 try
 {
-    await CreateHostBuilder(args).Build().RunAsync();
+    await CreateHostBuilder(args).Build().RunAsync().ConfigureAwait(false);
 }
 catch (Exception ex)
 {
