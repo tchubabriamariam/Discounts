@@ -1,0 +1,129 @@
+@model Discounts.Application.DTOs.Offers.OfferResponseDto
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 400px; object-fit: cover;">
+                }
+                <div class="card-body">
+                    <h1 class="card-title">@Model.Title</h1>
+
+                    <div class="mb-3">
+                        <span class="badge bg-info">@Model.CategoryName</span>
+                        <span class="badge bg-secondary">@Model.MerchantCompanyName</span>
+                        <span class="badge bg-success">@Model.DiscountPercentage% OFF</span>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="text-success d-inline">₾@Model.DiscountedPrice</h3>
+                        <span class="text-muted text-decoration-line-through ms-2">₾@Model.OriginalPrice</span>
+                    </div>
+
+                    <h5>Description</h5>
+                    <p class="card-text">@Model.Description</p>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Available Coupons:</strong> @Model.RemainingCoupons / @Model.TotalCoupons</p>
+                            <p><strong>Valid From:</strong> @Model.StartDate.ToString("dd MMM yyyy")</p>
+                            <p><strong>Valid Until:</strong> @Model.EndDate.ToString("dd MMM yyyy")</p>
+                        </div>
+                        <div class="col-md-6">
+                            @if (Model.RemainingCoupons > 0)
+                            {
+                                <div class="progress mb-2" style="height: 25px;">
+                                    @{
+                                        var percentage = (Model.RemainingCoupons * 100) / Model.TotalCoupons;
+                                    }
+                                    <div class="progress-bar bg-success" style="width: @percentage%">
+                                        @percentage% Available
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Sold Out!</strong> No coupons available.
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Purchase Options</h5>
+                </div>
+                <div class="card-body">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        @if (User.IsInRole("Customer"))
+                        {
+                            @if (Model.RemainingCoupons > 0)
+                            {
+                                <form asp-area="Customer" asp-controller="Reservations" asp-action="Create" method="post">
+                                    <input type="hidden" name="OfferId" value="@Model.Id" />
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Quantity</label>
+                                        <input type="number" name="Quantity" class="form-control" value="1" min="1" max="@Math.Min(10, Model.RemainingCoupons)" />
+                                    </div>
+
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-warning btn-lg">
+                                            🔖 Reserve Now
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="alert alert-info mt-3 small">
+                                    ℹ️ Reservations are held for 30 minutes
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Sold Out!</strong>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                Only customers can purchase coupons.
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <p>Please login to purchase</p>
+                            <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@Context.Request.Path" class="btn btn-primary w-100">
+                                Login
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
