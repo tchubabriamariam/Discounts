@@ -14,6 +14,12 @@ namespace Discounts.Web.Controllers
             _offerService = offerService;
         }
 
+        public async Task<IActionResult> Index(int? categoryId, decimal? minPrice, decimal? maxPrice)
+        {
+            var offers = await _offerService.GetApprovedOffersAsync(categoryId, minPrice, maxPrice);
+            return View(offers);
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             try

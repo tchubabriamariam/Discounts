@@ -80,7 +80,7 @@
                         {
                             @if (Model.RemainingCoupons > 0)
                             {
-                                <form asp-area="Customer" asp-controller="Reservations" asp-action="Create" method="post">
+                                <form asp-controller="Reservations" asp-action="Create" method="post">
                                     <input type="hidden" name="OfferId" value="@Model.Id" />
 
                                     <div class="mb-3">

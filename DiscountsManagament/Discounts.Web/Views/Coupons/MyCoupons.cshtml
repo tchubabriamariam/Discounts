@@ -1,0 +1,77 @@
+@model IEnumerable<Discounts.Application.DTOs.Coupons.CouponResponseDto>
+
+@{
+    ViewData["Title"] = "My Coupons";
+}
+
+<div class="container mt-4">
+    <h1>My Coupons</h1>
+    <p class="text-muted">Your purchased coupons</p>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var coupon in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 @(coupon.Status == CouponStatus.Used ? "border-secondary" : coupon.Status == CouponStatus.Expired ? "border-danger" : "border-success")">
+                        <div class="card-header @(coupon.Status == CouponStatus.Used ? "bg-secondary text-white" : coupon.Status == CouponStatus.Expired ? "bg-danger text-white" : "bg-success text-white")">
+                            @if (coupon.Status == CouponStatus.Active)
+                            {
+                                <span>✓ Active Coupon</span>
+                            }
+                            else if (coupon.Status == CouponStatus.Used)
+                            {
+                                <span>✓ Used</span>
+                            }
+                            else
+                            {
+                                <span>✗ Expired</span>
+                            }
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@coupon.OfferTitle</h5>
+                            <p class="text-muted mb-2">@coupon.MerchantCompanyName</p>
+                            <p class="text-muted mb-2"><small>@coupon.CategoryName</small></p>
+
+                            <div class="coupon-code bg-light p-3 text-center mb-3" style="font-family: monospace; font-size: 1.5rem; letter-spacing: 3px; border: 2px dashed #333;">
+                                <strong>@coupon.Code</strong>
+                            </div>
+
+                            <hr />
+
+                            <p class="mb-1"><strong>Price Paid:</strong> ₾@coupon.PricePaid</p>
+                            <p class="mb-1"><strong>Purchased:</strong> @coupon.PurchasedAt.ToString("dd MMM yyyy HH:mm")</p>
+
+                            @if (coupon.Status == CouponStatus.Active)
+                            {
+                                if (coupon.IsExpired)
+                                {
+                                    <p class="mb-1 text-danger"><strong>Status:</strong> Expired</p>
+                                }
+                                else
+                                {
+                                    <p class="mb-1"><strong>Expires:</strong> @coupon.ExpiresAt.ToString("dd MMM yyyy")</p>
+                                    <p class="mb-1"><span class="badge bg-warning text-dark">@coupon.DaysUntilExpiry days left</span></p>
+                                }
+                            }
+                        </div>
+                        @if (coupon.Status == CouponStatus.Active && !coupon.IsExpired)
+                        {
+                            <div class="card-footer">
+                                <small class="text-muted">Show this code to the merchant to redeem</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h4>No coupons found</h4>
+            <p>You haven't purchased any coupons yet. <a asp-controller="Home" asp-action="Index" asp-area="">Browse offers</a> and make a reservation!</p>
+        </div>
+    }
+</div>

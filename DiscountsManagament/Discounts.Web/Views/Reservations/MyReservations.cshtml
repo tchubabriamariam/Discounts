@@ -1,0 +1,145 @@
+@model IEnumerable<Discounts.Application.DTOs.Reservations.ReservationResponseDto>
+
+@{
+    ViewData["Title"] = "My Reservations";
+}
+
+<div class="container mt-4">
+    <h1>My Reservations</h1>
+    <p class="text-muted">Your active and past reservations</p>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Offer</th>
+                        <th>Merchant</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Reserved At</th>
+                        <th>Expires At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reservation in Model)
+                    {
+                        <tr class="@(reservation.Status == "Expired" ? "table-danger" : "")">
+                            <td>
+                                <strong>@reservation.OfferTitle</strong><br />
+                                <small class="text-muted">₾@reservation.PricePerCoupon each</small>
+                            </td>
+                            <td>@reservation.MerchantCompanyName</td>
+                            <td>@reservation.Quantity</td>
+                            <td>
+                                <strong>₾@reservation.TotalPrice</strong>
+                            </td>
+                            <td>
+                                @if (reservation.Status == "Active")
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else if (reservation.Status == "Purchased")
+                                {
+                                    <span class="badge bg-primary">Purchased</span>
+                                }
+                                else if (reservation.Status == "Expired")
+                                {
+                                    <span class="badge bg-danger">Expired</span>
+                                }
+                                else if (reservation.Status == "Cancelled")
+                                {
+                                    <span class="badge bg-secondary">Cancelled</span>
+                                }
+                            </td>
+                            <td>
+                                <small>@reservation.ReservedAt.ToString("dd MMM yyyy HH:mm")</small>
+                            </td>
+                            <td>
+                                @if (reservation.Status == "Active")
+                                {
+                                    if (reservation.IsExpired)
+                                    {
+                                        <span class="text-danger">Expired</span>
+                                    }
+                                    else
+                                    {
+                                        <small>
+                                            @reservation.ExpiresAt.ToString("dd MMM yyyy HH:mm")<br />
+                                            <span class="badge bg-warning text-dark">@reservation.MinutesRemaining min left</span>
+                                        </small>
+                                    }
+                                }
+                                else
+                                {
+                                    <small class="text-muted">-</small>
+                                }
+                            </td>
+                            <td>
+                                @if (reservation.Status == "Active" && !reservation.IsExpired)
+                                {
+                                    <button type="button" class="btn btn-sm btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#purchaseModal-@reservation.Id">
+                                        Purchase
+                                    </button>
+                                    <form method="post" asp-action="Cancel" asp-route-id="@reservation.Id" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this reservation?')">
+                                            Cancel
+                                        </button>
+                                    </form>
+
+                                    <!-- Purchase Modal -->
+                                    <div class="modal fade" id="purchaseModal-@reservation.Id" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Complete Purchase</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form method="post" asp-action="Purchase" asp-route-id="@reservation.Id">
+                                                    @Html.AntiForgeryToken()
+                                                    <div class="modal-body">
+                                                        <h6>@reservation.OfferTitle</h6>
+                                                        <p>Quantity: @reservation.Quantity</p>
+                                                        <p>Total: <strong>₾@reservation.TotalPrice</strong></p>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Payment Method</label>
+                                                            <select name="PaymentMethod" class="form-select" required>
+                                                                <option value="">Select payment method</option>
+                                                                <option value="Balance">Use Balance (₾@reservation.TotalPrice will be deducted)</option>
+                                                                <option value="Card">Credit Card</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Confirm Purchase</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h4>No reservations found</h4>
+            <p>You haven't made any reservations yet. <a asp-controller="Home" asp-action="Index" asp-area="">Browse offers</a> to get started!</p>
+        </div>
+    }
+</div>
