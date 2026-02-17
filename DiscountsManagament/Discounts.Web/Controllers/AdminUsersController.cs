@@ -2,7 +2,9 @@
 
 using Discounts.Application.DTOs.Admin;
 using Discounts.Application.Services.Interfaces;
+using Discounts.Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Discounts.Web.Controllers
@@ -11,10 +13,12 @@ namespace Discounts.Web.Controllers
     public class AdminUsersController : Controller
     {
         private readonly IAdminService _adminService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AdminUsersController(IAdminService adminService)
+        public AdminUsersController(IAdminService adminService, UserManager<ApplicationUser> userManager)
         {
             _adminService = adminService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -107,12 +111,21 @@ namespace Discounts.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MakeAdmin(string id)
+        public async Task<IActionResult> AddRole(string id, string role)
         {
             try
             {
-                await _adminService.MakeAdminAsync(id);
-                TempData["SuccessMessage"] = "User promoted to admin successfully.";
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null) throw new Exception("User not found.");
+
+                var validRoles = new[] { "Admin", "Merchant", "Customer" };
+                if (!validRoles.Contains(role)) throw new Exception("Invalid role.");
+
+                if (await _userManager.IsInRoleAsync(user, role))
+                    throw new Exception($"User already has the {role} role.");
+
+                await _userManager.AddToRoleAsync(user, role);
+                TempData["SuccessMessage"] = $"Role '{role}' added successfully.";
             }
             catch (Exception ex)
             {
@@ -123,12 +136,18 @@ namespace Discounts.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveAdmin(string id)
+        public async Task<IActionResult> RemoveRole(string id, string role)
         {
             try
             {
-                await _adminService.RemoveAdminAsync(id);
-                TempData["SuccessMessage"] = "Admin role removed successfully.";
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null) throw new Exception("User not found.");
+
+                if (!await _userManager.IsInRoleAsync(user, role))
+                    throw new Exception($"User does not have the {role} role.");
+
+                await _userManager.RemoveFromRoleAsync(user, role);
+                TempData["SuccessMessage"] = $"Role '{role}' removed successfully.";
             }
             catch (Exception ex)
             {

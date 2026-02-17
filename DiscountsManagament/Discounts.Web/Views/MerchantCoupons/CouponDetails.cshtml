@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Confirm Mark As Used";
+    var code = ViewBag.Code as string;
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Confirm Coupon</h1>
+        <a asp-action="VerifyCoupon" class="btn btn-outline-secondary">← Go Back</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">⚠️ Step 2: Confirm Mark As Used</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p class="text-muted">You are about to mark the following coupon as used:</p>
+
+                    <div class="p-4 bg-light rounded mb-4" style="font-family: monospace; font-size: 2rem; letter-spacing: 4px; border: 2px dashed #333;">
+                        <strong>@ViewBag.Code</strong>
+                    </div>
+
+                    <div class="alert alert-warning text-start">
+                        <strong>⚠️ This action cannot be undone!</strong><br />
+                        <small>The coupon will be permanently marked as used. Make sure the customer has received the service/product.</small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="VerifyCoupon" class="btn btn-outline-secondary w-50">← Cancel</a>
+                        <form asp-action="MarkAsUsed" method="post" class="w-50">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="code" value="@ViewBag.Code" />
+                            <button type="submit" class="btn btn-success w-100">
+                                ✓ Mark As Used
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -90,6 +90,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVyY2hhbnQvU2FsZXNIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Web/Views/MerchantCoupons/CouponDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVyY2hhbnRDb3Vwb25zL0NvdXBvbkRldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Web/Views/MerchantCoupons/VerifyCoupon.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVyY2hhbnRDb3Vwb25zL1ZlcmlmeUNvdXBvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Web/Views/MerchantOffers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVyY2hhbnRPZmZlcnMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

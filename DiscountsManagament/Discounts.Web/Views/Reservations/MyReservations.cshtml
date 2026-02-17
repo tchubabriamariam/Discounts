@@ -27,7 +27,7 @@
                 <tbody>
                     @foreach (var reservation in Model)
                     {
-                        <tr class="@(reservation.Status == "Expired" ? "table-danger" : "")">
+                        <tr class="@(reservation.Status == "Expired" ? "table-danger" : reservation.Status == "Completed" ? "table-success" : "")">
                             <td>
                                 <strong>@reservation.OfferTitle</strong><br />
                                 <small class="text-muted">₾@reservation.PricePerCoupon each</small>
@@ -42,9 +42,9 @@
                                 {
                                     <span class="badge bg-success">Active</span>
                                 }
-                                else if (reservation.Status == "Purchased")
+                                else if (reservation.Status == "Completed")
                                 {
-                                    <span class="badge bg-primary">Purchased</span>
+                                    <span class="badge bg-primary">Completed</span>
                                 }
                                 else if (reservation.Status == "Expired")
                                 {

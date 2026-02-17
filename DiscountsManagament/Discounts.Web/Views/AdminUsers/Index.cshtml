@@ -81,21 +81,49 @@
                                     </form>
                                 }
 
-                                @if (!user.Roles.Contains("Admin"))
+                                <!-- Add Role dropdown -->
+                                <div class="dropdown d-inline">
+                                    <button class="btn btn-sm btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        + Role
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var role in new[] { "Admin", "Merchant", "Customer" })
+                                        {
+                                            @if (!user.Roles.Contains(role))
+                                            {
+                                                <li>
+                                                    <form method="post" asp-action="AddRole" asp-route-id="@user.Id">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="role" value="@role" />
+                                                        <button type="submit" class="dropdown-item">Add @role</button>
+                                                    </form>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+
+                                <!-- Remove Role dropdown -->
+                                @if (user.Roles.Any())
                                 {
-                                    <form method="post" asp-action="MakeAdmin" asp-route-id="@user.Id" class="d-inline">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Make this user an admin?')">Make Admin</button>
-                                    </form>
-                                }
-                                else
-                                {
-                                    <form method="post" asp-action="RemoveAdmin" asp-route-id="@user.Id" class="d-inline">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                onclick="return confirm('Remove admin role?')">Remove Admin</button>
-                                    </form>
+                                    <div class="dropdown d-inline">
+                                        <button class="btn btn-sm btn-outline-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            - Role
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @foreach (var role in user.Roles)
+                                            {
+                                                <li>
+                                                    <form method="post" asp-action="RemoveRole" asp-route-id="@user.Id">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="role" value="@role" />
+                                                        <button type="submit" class="dropdown-item text-danger"
+                                                                onclick="return confirm('Remove @role role?')">Remove @role</button>
+                                                    </form>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
                                 }
 
                                 @if (!user.Roles.Contains("Admin"))
