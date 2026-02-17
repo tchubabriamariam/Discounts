@@ -1,0 +1,81 @@
+@model IEnumerable<Discounts.Application.DTOs.Offers.OfferResponseDto>
+
+@{
+    ViewData["Title"] = "My Offers";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>My Offers</h1>
+        <a asp-controller="MerchantOffers" asp-action="Create" class="btn btn-primary">+ Create New Offer</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Original Price</th>
+                        <th>Discounted Price</th>
+                        <th>Coupons</th>
+                        <th>Valid Until</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var offer in Model)
+                    {
+                        <tr>
+                            <td><strong>@offer.Title</strong></td>
+                            <td>@offer.CategoryName</td>
+                            <td><span class="text-muted text-decoration-line-through">₾@offer.OriginalPrice</span></td>
+                            <td><span class="text-success">₾@offer.DiscountedPrice</span></td>
+                            <td>@offer.RemainingCoupons / @offer.TotalCoupons</td>
+                            <td>@offer.EndDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (offer.Status == OfferStatus.Approved)
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else if (offer.Status == OfferStatus.Pending)
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else if (offer.Status == OfferStatus.Rejected)
+                                {
+                                    <span class="badge bg-danger">Rejected</span>
+                                    @if (!string.IsNullOrEmpty(offer.RejectionReason))
+                                    {
+                                        <br /><small class="text-danger">Reason: @offer.RejectionReason</small>
+                                    }
+                                }
+                                else if (offer.Status == OfferStatus.Expired)
+                                {
+                                    <span class="badge bg-secondary">Expired</span>
+                                }
+                                else if (offer.Status == OfferStatus.Cancelled)
+                                {
+                                    <span class="badge bg-dark">Cancelled</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="MerchantOffers" asp-action="Edit" asp-route-id="@offer.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h4>No offers yet</h4>
+            <p>You haven't created any offers. <a asp-controller="MerchantOffers" asp-action="Create">Create your first offer!</a></p>
+        </div>
+    }
+</div>

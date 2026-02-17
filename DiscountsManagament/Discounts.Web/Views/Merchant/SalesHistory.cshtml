@@ -1,0 +1,71 @@
+@model IEnumerable<Discounts.Application.DTOs.Offers.SalesHistoryResponseDto>
+
+@{
+    ViewData["Title"] = "Sales History";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Sales History</h1>
+        <a asp-controller="Merchant" asp-action="Dashboard" class="btn btn-outline-secondary">← Back to Dashboard</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h4 class="text-success">₾@Model.Sum(s => s.PricePaid).ToString("F2")</h4>
+                        <p class="text-muted">Total Revenue</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>@Model.Count()</h4>
+                        <p class="text-muted">Total Sales</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>@Model.Select(s => s.OfferTitle).Distinct().Count()</h4>
+                        <p class="text-muted">Offers Sold</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Offer</th>
+                        <th>Coupon Code</th>
+                        <th>Price Paid</th>
+                        <th>Purchased At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sale in Model)
+                    {
+                        <tr>
+                            <td>@sale.CustomerFullName</td>
+                            <td>@sale.CustomerEmail</td>
+                            <td>@sale.OfferTitle</td>
+                            <td>
+                                <code>@sale.CouponCode</code>
+                            </td>
+                            <td><strong>₾@sale.PricePaid</strong></td>
+                            <td>@sale.PurchasedAt.ToString("dd MMM yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h4>No sales yet</h4>
+            <p>You haven't made any sales yet. Make sure your offers are approved and visible to customers.</p>
+        </div>
+    }
+</div>

@@ -76,11 +76,17 @@ namespace Discounts.Web.Controllers
                     // Redirect based on role
                     var roles = await _userManager.GetRolesAsync(user);
                     if (roles.Contains("Admin"))
-                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    {
+                        return RedirectToAction("Dashboard", "Admin");
+                    }
                     if (roles.Contains("Merchant"))
-                        return RedirectToAction("Index", "Dashboard", new { area = "Merchant" });
+                    {
+                        return RedirectToAction("Dashboard", "Merchant");
+                    }
                     if (roles.Contains("Customer"))
+                    {
                         return RedirectToAction("Index", "Home");
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }

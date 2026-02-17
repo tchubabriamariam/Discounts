@@ -1,0 +1,75 @@
+@using Discounts.Application.DTOs.Admin
+@model Discounts.Application.DTOs.Admin.UpdateUserRequestDto
+
+@{
+    ViewData["Title"] = "Edit User";
+    var userInfo = ViewBag.UserInfo as UserResponseDto;
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h3>Edit User</h3>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">← Back</a>
+                </div>
+                <div class="card-body">
+                    @if (userInfo != null)
+                    {
+                        <div class="alert alert-info mb-3">
+                            <small>
+                                <strong>Roles:</strong>
+                                @foreach (var role in userInfo.Roles)
+                                {
+                                    <span class="badge @(role == "Admin" ? "bg-danger" : role == "Merchant" ? "bg-info" : "bg-success") me-1">@role</span>
+                                }
+                                | <strong>Status:</strong>
+                                @(userInfo.IsActive ? "Active" : "Blocked")
+                                | <strong>Joined:</strong> @userInfo.CreatedAt.ToString("dd MMM yyyy")
+                            </small>
+                        </div>
+                    }
+
+                    <form asp-action="Edit" asp-route-id="@ViewBag.UserId" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FirstName" class="form-label"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="LastName" class="form-label"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" type="email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Balance" class="form-label">Balance (₾)</label>
+                            <input asp-for="Balance" class="form-control" type="number" step="0.01" min="0" />
+                            <span asp-validation-for="Balance" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

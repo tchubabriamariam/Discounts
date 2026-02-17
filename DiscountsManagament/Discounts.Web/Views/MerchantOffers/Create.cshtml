@@ -1,0 +1,98 @@
+@using Discounts.Application.DTOs.Categories
+@model Discounts.Application.DTOs.Offers.CreateOfferRequestDto
+
+@{
+    ViewData["Title"] = "Create Offer";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Create New Offer</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Category</label>
+                            <select asp-for="CategoryId" class="form-select">
+                                <option value="">Select Category</option>
+                                @foreach (var category in ViewBag.Categories as IEnumerable<CategoryResponseDto>)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label">Image URL (optional)</label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="OriginalPrice" class="form-label">Original Price (₾)</label>
+                                <input asp-for="OriginalPrice" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="DiscountedPrice" class="form-label">Discounted Price (₾)</label>
+                                <input asp-for="DiscountedPrice" class="form-control" type="number" step="0.01" min="0" />
+                                <span asp-validation-for="DiscountedPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TotalCoupons" class="form-label">Total Coupons</label>
+                            <input asp-for="TotalCoupons" class="form-control" type="number" min="1" />
+                            <span asp-validation-for="TotalCoupons" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="StartDate" class="form-label">Start Date</label>
+                                <input asp-for="StartDate" class="form-control" type="datetime-local" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="EndDate" class="form-label">End Date</label>
+                                <input asp-for="EndDate" class="form-control" type="datetime-local" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <small>⚠️ Your offer will be submitted for admin approval before becoming visible to customers.</small>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Submit for Approval</button>
+                            <a asp-action="MyOffers" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

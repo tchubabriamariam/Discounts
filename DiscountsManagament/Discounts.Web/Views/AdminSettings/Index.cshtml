@@ -1,0 +1,72 @@
+@using Discounts.Application.DTOs.GlobalSettings
+@model Discounts.Application.DTOs.GlobalSettings.UpdateGlobalSettingsRequestDto
+
+@{
+    ViewData["Title"] = "Global Settings";
+    var settings = ViewBag.Settings as GlobalSettingsResponseDto;
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Global Settings</h1>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-outline-secondary">← Dashboard</a>
+    </div>
+
+    @if (settings != null)
+    {
+        <div class="alert alert-info mb-4">
+            <small>
+                <strong>Last updated:</strong> @settings.UpdatedAt.ToString("dd MMM yyyy HH:mm")
+                @if (!string.IsNullOrEmpty(settings.UpdatedByAdminEmail))
+                {
+                    <span> by <strong>@settings.UpdatedByAdminEmail</strong></span>
+                }
+            </small>
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">⚙️ System Configuration</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Index" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="ReservationDurationMinutes" class="form-label">
+                                Reservation Duration (minutes)
+                            </label>
+                            <input asp-for="ReservationDurationMinutes" class="form-control" type="number" min="1" />
+                            <div class="form-text">
+                                How long a customer has to complete a purchase after reserving.
+                                Currently: <strong>@settings?.ReservationDurationMinutes minutes</strong>
+                            </div>
+                            <span asp-validation-for="ReservationDurationMinutes" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="MerchantEditWindowHours" class="form-label">
+                                Merchant Edit Window (hours)
+                            </label>
+                            <input asp-for="MerchantEditWindowHours" class="form-control" type="number" min="0" />
+                            <div class="form-text">
+                                How many hours after creation a merchant can edit their offer.
+                                Currently: <strong>@settings?.MerchantEditWindowHours hours</strong>
+                            </div>
+                            <span asp-validation-for="MerchantEditWindowHours" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

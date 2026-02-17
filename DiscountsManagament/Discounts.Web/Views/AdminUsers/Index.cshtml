@@ -1,0 +1,116 @@
+@model IEnumerable<Discounts.Application.DTOs.Admin.UserResponseDto>
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>User Management</h1>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-outline-secondary">← Dashboard</a>
+    </div>
+
+    <!-- Role Filter -->
+    <div class="mb-3">
+        <a asp-action="Index" class="btn btn-sm @(ViewBag.RoleFilter == null ? "btn-primary" : "btn-outline-primary")">All</a>
+        <a asp-action="Index" asp-route-role="Admin" class="btn btn-sm @(ViewBag.RoleFilter == "Admin" ? "btn-danger" : "btn-outline-danger")">Admins</a>
+        <a asp-action="Index" asp-route-role="Merchant" class="btn btn-sm @(ViewBag.RoleFilter == "Merchant" ? "btn-info" : "btn-outline-info")">Merchants</a>
+        <a asp-action="Index" asp-route-role="Customer" class="btn btn-sm @(ViewBag.RoleFilter == "Customer" ? "btn-success" : "btn-outline-success")">Customers</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr class="@(!user.IsActive ? "table-danger" : "")">
+                        <td>
+                            @user.FullName
+                            @if (!string.IsNullOrEmpty(user.MerchantCompanyName))
+                            {
+                                <br /><small class="text-muted">@user.MerchantCompanyName</small>
+                            }
+                        </td>
+                        <td>@user.Email</td>
+                        <td>
+                            @foreach (var role in user.Roles)
+                            {
+                                <span class="badge @(role == "Admin" ? "bg-danger" : role == "Merchant" ? "bg-info" : "bg-success")">@role</span>
+                            }
+                        </td>
+                        <td>₾@user.Balance</td>
+                        <td>
+                            @if (user.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Blocked</span>
+                            }
+                        </td>
+                        <td><small>@user.CreatedAt.ToString("dd MMM yyyy")</small></td>
+                        <td>
+                            <div class="d-flex gap-1 flex-wrap">
+                                <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+
+                                @if (user.IsActive)
+                                {
+                                    <form method="post" asp-action="Block" asp-route-id="@user.Id" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-warning"
+                                                onclick="return confirm('Block this user?')">Block</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="Unblock" asp-route-id="@user.Id" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-success">Unblock</button>
+                                    </form>
+                                }
+
+                                @if (!user.Roles.Contains("Admin"))
+                                {
+                                    <form method="post" asp-action="MakeAdmin" asp-route-id="@user.Id" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Make this user an admin?')">Make Admin</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-action="RemoveAdmin" asp-route-id="@user.Id" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                onclick="return confirm('Remove admin role?')">Remove Admin</button>
+                                    </form>
+                                }
+
+                                @if (!user.Roles.Contains("Admin"))
+                                {
+                                    <form method="post" asp-action="Delete" asp-route-id="@user.Id" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Delete this user?')">Delete</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

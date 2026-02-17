@@ -31,13 +31,31 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a>
+                                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="AdminUsers" asp-action="Index">Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="AdminModeration" asp-action="Index">Moderation</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="AdminCategories" asp-action="Index">Categories</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="AdminSettings" asp-action="Index">Settings</a>
                                 </li>
                             }
                             @if (User.IsInRole("Merchant"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Merchant" asp-controller="Dashboard" asp-action="Index">Merchant Dashboard</a>
+                                    <a class="nav-link text-dark" asp-controller="Merchant" asp-action="Dashboard">Merchant Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="MerchantOffers" asp-action="MyOffers">My Offers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Merchant" asp-action="SalesHistory">Sales History</a>
                                 </li>
                             }
                             @if (User.IsInRole("Customer"))

@@ -1,0 +1,82 @@
+@model IEnumerable<Discounts.Application.DTOs.Offers.OfferResponseDto>
+
+@{
+    ViewData["Title"] = "Offer Moderation";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Offer Moderation</h1>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-outline-secondary">← Dashboard</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="alert alert-warning">
+            <strong>@Model.Count() pending offer(s)</strong> waiting for review.
+        </div>
+
+        @foreach (var offer in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>@offer.Title</h5>
+                            <p class="text-muted mb-1">@offer.Description</p>
+                            <div class="mb-2">
+                                <span class="badge bg-info">@offer.CategoryName</span>
+                                <span class="badge bg-secondary">@offer.MerchantCompanyName</span>
+                            </div>
+                            <p class="mb-1">
+                                <strong>Price:</strong>
+                                <span class="text-muted text-decoration-line-through">₾@offer.OriginalPrice</span>
+                                <span class="text-success ms-1">₾@offer.DiscountedPrice</span>
+                                <span class="badge bg-success ms-1">@offer.DiscountPercentage% OFF</span>
+                            </p>
+                            <p class="mb-1"><strong>Coupons:</strong> @offer.TotalCoupons</p>
+                            <p class="mb-1">
+                                <strong>Valid:</strong> @offer.StartDate.ToString("dd MMM yyyy") - @offer.EndDate.ToString("dd MMM yyyy")
+                            </p>
+                            <p class="mb-0">
+                                <strong>Submitted:</strong> @offer.CreatedAt.ToString("dd MMM yyyy HH:mm")
+                            </p>
+                        </div>
+                        <div class="col-md-4 d-flex flex-column gap-2 justify-content-center">
+                            <form method="post" asp-action="Approve" asp-route-id="@offer.Id">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-success w-100"
+                                        onclick="return confirm('Approve this offer?')">
+                                    ✓ Approve
+                                </button>
+                            </form>
+
+                            <button type="button" class="btn btn-danger w-100"
+                                    data-bs-toggle="collapse" data-bs-target="#reject-@offer.Id">
+                                ✗ Reject
+                            </button>
+
+                            <div class="collapse" id="reject-@offer.Id">
+                                <form method="post" asp-action="Reject" asp-route-id="@offer.Id">
+                                    @Html.AntiForgeryToken()
+                                    <div class="mb-2">
+                                        <textarea name="Reason" class="form-control" rows="2"
+                                                  placeholder="Reason for rejection..." required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger w-100">Confirm Rejection</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-success">
+            <h4>✓ All caught up!</h4>
+            <p>No pending offers to review.</p>
+        </div>
+    }
+</div>

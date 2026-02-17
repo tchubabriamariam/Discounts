@@ -44,6 +44,7 @@ namespace Discounts.Application.Mapping
             // coupons
             TypeAdapterConfig<Coupon, SalesHistoryResponseDto>
                 .NewConfig()
+                .Map(dest => dest.CouponCode, src => src.Code)
                 .Map(dest => dest.CustomerFullName,
                     src => src.User != null ? $"{src.User.FirstName} {src.User.LastName}" : "Unknown")
                 .Map(dest => dest.CustomerEmail, src => src.User != null ? src.User.Email : string.Empty)
