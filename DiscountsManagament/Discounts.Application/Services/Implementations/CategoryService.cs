@@ -23,8 +23,6 @@ namespace Discounts.Application.Services.Implementations
             _logger = logger;
         }
 
-        // ── Admin ─────────────────────────────────────────────────────────────────
-
         public async Task<CategoryResponseDto> CreateCategoryAsync(CreateCategoryRequestDto request,
             CancellationToken cancellationToken = default)
         {

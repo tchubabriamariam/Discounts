@@ -2,65 +2,138 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="container mt-4">
+<style>
+    .adm-wrap {
+        padding: 2rem;
+    }
+
+    .adm-wrap h1 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .stat-card {
+        border-radius: 8px;
+        padding: 1.5rem;
+        color: #fff;
+        transition: filter 0.15s;
+    }
+
+    .stat-card:hover {
+        filter: brightness(1.12);
+    }
+
+    .stat-card--blue  { background: #2563eb; }
+    .stat-card--amber { background: #d97706; }
+    .stat-card--teal  { background: #0891b2; }
+
+    .stat-card h5 {
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin: 0 0 0.4rem;
+        opacity: 0.85;
+    }
+
+    .stat-card h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        line-height: 1;
+    }
+
+    .stat-card small {
+        font-size: 0.75rem;
+        opacity: 0.85;
+    }
+
+    .stat-card a {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.85;
+    }
+
+    .stat-card a:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+
+    .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+
+    .nav-btn {
+        display: block;
+        border-radius: 8px;
+        padding: 1.25rem 1.5rem;
+        text-decoration: none;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: filter 0.15s;
+    }
+
+    .nav-btn:hover {
+        filter: brightness(1.12);
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-btn--blue  { background: #2563eb; }
+    .nav-btn--amber { background: #d97706; }
+    .nav-btn--teal  { background: #0891b2; }
+    .nav-btn--slate { background: #475569; }
+
+    @@media (max-width: 900px) {
+        .stat-grid { grid-template-columns: 1fr; }
+        .nav-grid  { grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
+
+<div class="adm-wrap">
     <h1>Admin Dashboard</h1>
 
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Total Users</h5>
-                    <h2>@ViewBag.TotalUsers</h2>
-                    <p class="mb-0">
-                        <small>Customers: @ViewBag.TotalCustomers | Merchants: @ViewBag.TotalMerchants</small>
-                    </p>
-                </div>
-            </div>
+    <div class="stat-grid">
+        <div class="stat-card stat-card--blue">
+            <h5>Total Users</h5>
+            <h2>@ViewBag.TotalUsers</h2>
+            <small>Customers: @ViewBag.TotalCustomers &nbsp;|&nbsp; Merchants: @ViewBag.TotalMerchants</small>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-warning">
-                <div class="card-body">
-                    <h5 class="card-title">Pending Offers</h5>
-                    <h2>@ViewBag.PendingOffers</h2>
-                    <a asp-controller="AdminModeration" asp-action="Index" class="text-white">
-                        <small>Review now →</small>
-                    </a>
-                </div>
-            </div>
+
+        <div class="stat-card stat-card--amber">
+            <h5>Pending Offers</h5>
+            <h2>@ViewBag.PendingOffers</h2>
+            <a asp-controller="AdminModeration" asp-action="Index"><small>Review now &rarr;</small></a>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-info">
-                <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    <h2>@ViewBag.TotalCategories</h2>
-                    <a asp-controller="AdminCategories" asp-action="Index" class="text-white">
-                        <small>Manage →</small>
-                    </a>
-                </div>
-            </div>
+
+        <div class="stat-card stat-card--teal">
+            <h5>Categories</h5>
+            <h2>@ViewBag.TotalCategories</h2>
+            <a asp-controller="AdminCategories" asp-action="Index"><small>Manage &rarr;</small></a>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            <a asp-controller="AdminUsers" asp-action="Index" class="btn btn-outline-primary w-100 p-3">
-                👥 Manage Users
-            </a>
-        </div>
-        <div class="col-md-3 mb-3">
-            <a asp-controller="AdminModeration" asp-action="Index" class="btn btn-outline-warning w-100 p-3">
-                📋 Offer Moderation
-            </a>
-        </div>
-        <div class="col-md-3 mb-3">
-            <a asp-controller="AdminCategories" asp-action="Index" class="btn btn-outline-info w-100 p-3">
-                🏷️ Categories
-            </a>
-        </div>
-        <div class="col-md-3 mb-3">
-            <a asp-controller="AdminSettings" asp-action="Index" class="btn btn-outline-secondary w-100 p-3">
-                ⚙️ Global Settings
-            </a>
-        </div>
+    <div class="nav-grid">
+        <a asp-controller="AdminUsers" asp-action="Index" class="nav-btn nav-btn--blue">
+            Manage Users
+        </a>
+        <a asp-controller="AdminModeration" asp-action="Index" class="nav-btn nav-btn--amber">
+            Offer Moderation
+        </a>
+        <a asp-controller="AdminCategories" asp-action="Index" class="nav-btn nav-btn--teal">
+            Categories
+        </a>
+        <a asp-controller="AdminSettings" asp-action="Index" class="nav-btn nav-btn--slate">
+            Global Settings
+        </a>
     </div>
 </div>
