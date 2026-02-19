@@ -18,14 +18,14 @@ namespace Discounts.Application.Tests.Reservations
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
     private readonly Mock<ILogger<ReservationService>> _loggerMock;
-    private readonly ReservationService _sut;
+    private readonly ReservationService _service;
 
     public ReservationServiceTests()
     {
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _userManagerMock = MockUserManager();
         _loggerMock = new Mock<ILogger<ReservationService>>();
-        _sut = new ReservationService(_unitOfWorkMock.Object, _userManagerMock.Object, _loggerMock.Object);
+        _service = new ReservationService(_unitOfWorkMock.Object, _userManagerMock.Object, _loggerMock.Object);
     }
 
     #region CreateReservationAsync Tests
@@ -62,7 +62,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(1);
 
         // Act
-        var result = await _sut.CreateReservationAsync(userId, request);
+        var result = await _service.CreateReservationAsync(userId, request);
 
         // Assert
         result.Should().NotBeNull();
@@ -82,7 +82,7 @@ namespace Discounts.Application.Tests.Reservations
         _userManagerMock.Setup(x => x.FindByIdAsync(userId)).ReturnsAsync((ApplicationUser?)null);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<NotFoundException>();
@@ -99,7 +99,7 @@ namespace Discounts.Application.Tests.Reservations
         _userManagerMock.Setup(x => x.FindByIdAsync(userId)).ReturnsAsync(user);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<AccountInactiveException>();
@@ -118,7 +118,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync((Offer?)null);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<NotFoundException>();
@@ -144,7 +144,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(offer);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<OfferNotAvailableException>();
@@ -172,7 +172,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(offer);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<OfferNotAvailableException>();
@@ -200,7 +200,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(offer);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<OfferNotAvailableException>();
@@ -229,7 +229,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(offer);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<InsufficientCouponsException>();
@@ -261,7 +261,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(existingReservation);
 
         // Act
-        Func<Task> act = async () => await _sut.CreateReservationAsync(userId, request);
+        Func<Task> act = async () => await _service.CreateReservationAsync(userId, request);
 
         // Assert
         await act.Should().ThrowAsync<DuplicateReservationException>();
@@ -311,7 +311,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(1);
 
         // Act
-        var result = await _sut.PurchaseReservationAsync(userId, 1, request);
+        var result = await _service.PurchaseReservationAsync(userId, 1, request);
 
         // Assert
         result.Should().HaveCount(2);
@@ -331,7 +331,7 @@ namespace Discounts.Application.Tests.Reservations
         _userManagerMock.Setup(x => x.FindByIdAsync(userId)).ReturnsAsync((ApplicationUser?)null);
 
         // Act
-        Func<Task> act = async () => await _sut.PurchaseReservationAsync(userId, 1, request);
+        Func<Task> act = async () => await _service.PurchaseReservationAsync(userId, 1, request);
 
         // Assert
         await act.Should().ThrowAsync<NotFoundException>();
@@ -348,7 +348,7 @@ namespace Discounts.Application.Tests.Reservations
         _userManagerMock.Setup(x => x.FindByIdAsync(userId)).ReturnsAsync(user);
 
         // Act
-        Func<Task> act = async () => await _sut.PurchaseReservationAsync(userId, 1, request);
+        Func<Task> act = async () => await _service.PurchaseReservationAsync(userId, 1, request);
 
         // Assert
         await act.Should().ThrowAsync<AccountInactiveException>();
@@ -367,7 +367,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync((Reservation?)null);
 
         // Act
-        Func<Task> act = async () => await _sut.PurchaseReservationAsync(userId, 999, request);
+        Func<Task> act = async () => await _service.PurchaseReservationAsync(userId, 999, request);
 
         // Assert
         await act.Should().ThrowAsync<NotFoundException>();
@@ -392,7 +392,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(reservation);
 
         // Act
-        Func<Task> act = async () => await _sut.PurchaseReservationAsync(userId, 1, request);
+        Func<Task> act = async () => await _service.PurchaseReservationAsync(userId, 1, request);
 
         // Assert
         await act.Should().ThrowAsync<InvalidOfferStatusException>();
@@ -418,7 +418,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(reservation);
 
         // Act
-        Func<Task> act = async () => await _sut.PurchaseReservationAsync(userId, 1, request);
+        Func<Task> act = async () => await _service.PurchaseReservationAsync(userId, 1, request);
 
         // Assert
         await act.Should().ThrowAsync<ReservationExpiredException>();
@@ -449,7 +449,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(offer);
 
         // Act
-        Func<Task> act = async () => await _sut.PurchaseReservationAsync(userId, 1, request);
+        Func<Task> act = async () => await _service.PurchaseReservationAsync(userId, 1, request);
 
         // Assert
         await act.Should().ThrowAsync<InsufficientBalanceException>();
@@ -482,7 +482,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(1);
 
         // Act
-        await _sut.CancelReservationAsync(userId, 1);
+        await _service.CancelReservationAsync(userId, 1);
 
         // Assert
         reservation.Status.Should().Be(ReservationStatus.Cancelled);
@@ -501,7 +501,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync((Reservation?)null);
 
         // Act
-        Func<Task> act = async () => await _sut.CancelReservationAsync(userId, 999);
+        Func<Task> act = async () => await _service.CancelReservationAsync(userId, 999);
 
         // Assert
         await act.Should().ThrowAsync<NotFoundException>();
@@ -523,7 +523,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(reservation);
 
         // Act
-        Func<Task> act = async () => await _sut.CancelReservationAsync(userId, 1);
+        Func<Task> act = async () => await _service.CancelReservationAsync(userId, 1);
 
         // Assert
         await act.Should().ThrowAsync<BusinessRuleViolationException>();
@@ -568,7 +568,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(reservations);
 
         // Act
-        var result = await _sut.GetMyReservationsAsync(userId);
+        var result = await _service.GetMyReservationsAsync(userId);
 
         // Assert
         result.Should().HaveCount(2);
@@ -601,7 +601,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(reservations);
 
         // Act
-        var result = await _sut.GetReservationByIdAsync(userId, 1);
+        var result = await _service.GetReservationByIdAsync(userId, 1);
 
         // Assert
         result.Should().NotBeNull();
@@ -619,7 +619,7 @@ namespace Discounts.Application.Tests.Reservations
             .ReturnsAsync(reservations);
 
         // Act
-        Func<Task> act = async () => await _sut.GetReservationByIdAsync(userId, 999);
+        Func<Task> act = async () => await _service.GetReservationByIdAsync(userId, 999);
 
         // Assert
         await act.Should().ThrowAsync<NotFoundException>();

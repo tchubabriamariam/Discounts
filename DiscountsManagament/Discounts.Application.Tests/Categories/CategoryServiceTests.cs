@@ -15,13 +15,13 @@ namespace Discounts.Application.Tests.Categories
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly Mock<ILogger<CategoryService>> _loggerMock;
-        private readonly CategoryService _sut;
+        private readonly CategoryService _service;
 
         public CategoryServiceTests()
         {
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _loggerMock = new Mock<ILogger<CategoryService>>();
-            _sut = new CategoryService(_unitOfWorkMock.Object, _loggerMock.Object);
+            _service = new CategoryService(_unitOfWorkMock.Object, _loggerMock.Object);
         }
 
         #region CreateCategoryAsync Tests
@@ -47,7 +47,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.CreateCategoryAsync(request);
+            var result = await _service.CreateCategoryAsync(request);
 
             // Assert
             result.Should().NotBeNull();
@@ -67,7 +67,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(true);
 
             // Act
-            Func<Task> act = async () => await _sut.CreateCategoryAsync(request);
+            Func<Task> act = async () => await _service.CreateCategoryAsync(request);
 
             // Assert
             await act.Should().ThrowAsync<AlreadyExistsException>()
@@ -100,7 +100,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.UpdateCategoryAsync(categoryId, request);
+            var result = await _service.UpdateCategoryAsync(categoryId, request);
 
             // Assert
             result.Should().NotBeNull();
@@ -118,7 +118,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync((Category?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.UpdateCategoryAsync(999, request);
+            Func<Task> act = async () => await _service.UpdateCategoryAsync(999, request);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -137,7 +137,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(true);
 
             // Act
-            Func<Task> act = async () => await _sut.UpdateCategoryAsync(1, request);
+            Func<Task> act = async () => await _service.UpdateCategoryAsync(1, request);
 
             // Assert
             await act.Should().ThrowAsync<AlreadyExistsException>();
@@ -162,7 +162,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(1);
 
             // Act
-            await _sut.DeleteCategoryAsync(categoryId);
+            await _service.DeleteCategoryAsync(categoryId);
 
             // Assert
             _unitOfWorkMock.Verify(x => x.Categories.SoftDelete(It.IsAny<Category>()), Times.Once);
@@ -177,7 +177,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync((Category?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.DeleteCategoryAsync(999);
+            Func<Task> act = async () => await _service.DeleteCategoryAsync(999);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -201,7 +201,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(offers);
 
             // Act
-            Func<Task> act = async () => await _sut.DeleteCategoryAsync(categoryId);
+            Func<Task> act = async () => await _service.DeleteCategoryAsync(categoryId);
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
@@ -227,7 +227,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.ActivateCategoryAsync(categoryId);
+            var result = await _service.ActivateCategoryAsync(categoryId);
 
             // Assert
             result.IsActive.Should().BeTrue();
@@ -243,7 +243,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync((Category?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.ActivateCategoryAsync(999);
+            Func<Task> act = async () => await _service.ActivateCategoryAsync(999);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -260,7 +260,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(category);
 
             // Act
-            Func<Task> act = async () => await _sut.ActivateCategoryAsync(categoryId);
+            Func<Task> act = async () => await _service.ActivateCategoryAsync(categoryId);
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
@@ -286,7 +286,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.DeactivateCategoryAsync(categoryId);
+            var result = await _service.DeactivateCategoryAsync(categoryId);
 
             // Assert
             result.IsActive.Should().BeFalse();
@@ -302,7 +302,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync((Category?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.DeactivateCategoryAsync(999);
+            Func<Task> act = async () => await _service.DeactivateCategoryAsync(999);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -319,7 +319,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(category);
 
             // Act
-            Func<Task> act = async () => await _sut.DeactivateCategoryAsync(categoryId);
+            Func<Task> act = async () => await _service.DeactivateCategoryAsync(categoryId);
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
@@ -346,7 +346,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.GetAllCategoriesAsync(true);
+            var result = await _service.GetAllCategoriesAsync(true);
 
             // Assert
             result.Should().HaveCount(2);
@@ -367,7 +367,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.GetAllCategoriesAsync(false);
+            var result = await _service.GetAllCategoriesAsync(false);
 
             // Assert
             result.Should().HaveCount(1);
@@ -394,7 +394,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.GetActiveCategoriesAsync();
+            var result = await _service.GetActiveCategoriesAsync();
 
             // Assert
             result.Should().HaveCount(2);
@@ -418,7 +418,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync(new List<Offer>());
 
             // Act
-            var result = await _sut.GetCategoryByIdAsync(categoryId);
+            var result = await _service.GetCategoryByIdAsync(categoryId);
 
             // Assert
             result.Should().NotBeNull();
@@ -433,7 +433,7 @@ namespace Discounts.Application.Tests.Categories
                 .ReturnsAsync((Category?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.GetCategoryByIdAsync(999);
+            Func<Task> act = async () => await _service.GetCategoryByIdAsync(999);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>();

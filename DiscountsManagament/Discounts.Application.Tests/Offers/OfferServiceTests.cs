@@ -17,14 +17,14 @@ namespace Discounts.Application.Tests.Offers
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
         private readonly Mock<ILogger<OfferService>> _loggerMock;
-        private readonly OfferService _sut;
+        private readonly OfferService _service;
 
         public OfferServiceTests()
         {
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _userManagerMock = MockUserManager();
             _loggerMock = new Mock<ILogger<OfferService>>();
-            _sut = new OfferService(_unitOfWorkMock.Object, _userManagerMock.Object, _loggerMock.Object);
+            _service = new OfferService(_unitOfWorkMock.Object, _userManagerMock.Object, _loggerMock.Object);
         }
 
         #region CreateOfferAsync Tests
@@ -58,7 +58,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(1);
 
             // Act
-            var result = await _sut.CreateOfferAsync(merchantUserId, request);
+            var result = await _service.CreateOfferAsync(merchantUserId, request);
 
             // Assert
             result.Should().NotBeNull();
@@ -80,7 +80,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Merchant?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.CreateOfferAsync(merchantUserId, request);
+            Func<Task> act = async () => await _service.CreateOfferAsync(merchantUserId, request);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -101,7 +101,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Category?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.CreateOfferAsync(merchantUserId, request);
+            Func<Task> act = async () => await _service.CreateOfferAsync(merchantUserId, request);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -132,7 +132,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(category);
 
             // Act
-            Func<Task> act = async () => await _sut.CreateOfferAsync(merchantUserId, request);
+            Func<Task> act = async () => await _service.CreateOfferAsync(merchantUserId, request);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -161,7 +161,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(category);
 
             // Act
-            Func<Task> act = async () => await _sut.CreateOfferAsync(merchantUserId, request);
+            Func<Task> act = async () => await _service.CreateOfferAsync(merchantUserId, request);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -210,7 +210,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(1);
 
             // Act
-            var result = await _sut.UpdateOfferAsync(merchantUserId, 1, request);
+            var result = await _service.UpdateOfferAsync(merchantUserId, 1, request);
 
             // Assert
             result.Should().NotBeNull();
@@ -229,7 +229,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Merchant?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.UpdateOfferAsync(merchantUserId, 1, request);
+            Func<Task> act = async () => await _service.UpdateOfferAsync(merchantUserId, 1, request);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -249,7 +249,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Offer?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.UpdateOfferAsync(merchantUserId, 999, new UpdateOfferRequestDto());
+            Func<Task> act = async () => await _service.UpdateOfferAsync(merchantUserId, 999, new UpdateOfferRequestDto());
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -273,7 +273,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offer);
 
             // Act
-            Func<Task> act = async () => await _sut.UpdateOfferAsync(merchantUserId, 1, new UpdateOfferRequestDto());
+            Func<Task> act = async () => await _service.UpdateOfferAsync(merchantUserId, 1, new UpdateOfferRequestDto());
 
             // Assert
             await act.Should().ThrowAsync<UnauthorizedAccessException>()
@@ -304,7 +304,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(settings);
 
             // Act
-            Func<Task> act = async () => await _sut.UpdateOfferAsync(merchantUserId, 1, new UpdateOfferRequestDto());
+            Func<Task> act = async () => await _service.UpdateOfferAsync(merchantUserId, 1, new UpdateOfferRequestDto());
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -336,7 +336,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(1);
 
             // Act
-            var result = await _sut.ApproveOfferAsync(adminUserId, offerId);
+            var result = await _service.ApproveOfferAsync(adminUserId, offerId);
 
             // Assert
             result.Status.Should().Be(OfferStatus.Approved);
@@ -354,7 +354,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Offer?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.ApproveOfferAsync("admin-1", 999);
+            Func<Task> act = async () => await _service.ApproveOfferAsync("admin-1", 999);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -376,7 +376,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offer);
 
             // Act
-            Func<Task> act = async () => await _sut.ApproveOfferAsync(adminUserId, offerId);
+            Func<Task> act = async () => await _service.ApproveOfferAsync(adminUserId, offerId);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -406,7 +406,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(1);
 
             // Act
-            var result = await _sut.RejectOfferAsync(adminUserId, offerId, request);
+            var result = await _service.RejectOfferAsync(adminUserId, offerId, request);
 
             // Assert
             result.Status.Should().Be(OfferStatus.Rejected);
@@ -422,7 +422,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Offer?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.RejectOfferAsync("admin-1", 999, new RejectOfferRequestDto());
+            Func<Task> act = async () => await _service.RejectOfferAsync("admin-1", 999, new RejectOfferRequestDto());
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -442,7 +442,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offer);
 
             // Act
-            Func<Task> act = async () => await _sut.RejectOfferAsync("admin-1", 1, new RejectOfferRequestDto());
+            Func<Task> act = async () => await _service.RejectOfferAsync("admin-1", 1, new RejectOfferRequestDto());
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -481,7 +481,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offers);
 
             // Act
-            var result = await _sut.GetApprovedOffersAsync(null, null, null);
+            var result = await _service.GetApprovedOffersAsync(null, null, null);
 
             // Assert
             result.Should().HaveCount(2);
@@ -516,7 +516,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offers);
 
             // Act
-            var result = await _sut.GetApprovedOffersAsync(categoryId, null, null);
+            var result = await _service.GetApprovedOffersAsync(categoryId, null, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -561,7 +561,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offers);
 
             // Act
-            var result = await _sut.GetApprovedOffersAsync(null, minPrice, maxPrice);
+            var result = await _service.GetApprovedOffersAsync(null, minPrice, maxPrice);
 
             // Assert
             result.Should().HaveCount(1);
@@ -590,7 +590,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offers);
 
             // Act
-            var result = await _sut.GetMerchantOffersAsync(merchantUserId);
+            var result = await _service.GetMerchantOffersAsync(merchantUserId);
 
             // Assert
             result.Should().HaveCount(2);
@@ -604,7 +604,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Merchant?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.GetMerchantOffersAsync("invalid-merchant");
+            Func<Task> act = async () => await _service.GetMerchantOffersAsync("invalid-merchant");
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -631,7 +631,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offer);
 
             // Act
-            var result = await _sut.GetOfferDetailsAsync(1);
+            var result = await _service.GetOfferDetailsAsync(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -646,7 +646,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync((Offer?)null);
 
             // Act
-            Func<Task> act = async () => await _sut.GetOfferDetailsAsync(999);
+            Func<Task> act = async () => await _service.GetOfferDetailsAsync(999);
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
@@ -674,7 +674,7 @@ namespace Discounts.Application.Tests.Offers
                 .ReturnsAsync(offers);
 
             // Act
-            var result = await _sut.GetPendingOffersAsync();
+            var result = await _service.GetPendingOffersAsync();
 
             // Assert
             result.Should().HaveCount(2);
@@ -718,7 +718,7 @@ namespace Discounts.Application.Tests.Offers
             _userManagerMock.Setup(x => x.FindByIdAsync("customer-1")).ReturnsAsync(user);
 
             // Act
-            var result = await _sut.GetSalesHistoryAsync(merchantUserId);
+            var result = await _service.GetSalesHistoryAsync(merchantUserId);
 
             // Assert
             result.Should().HaveCount(1);
