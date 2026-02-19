@@ -334,6 +334,25 @@
           }
         }
       },
+      "Microsoft.AspNetCore.OpenApi/8.0.22": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.OpenApi": "1.4.3"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "type": "package",
         "compile": {
@@ -1289,6 +1308,41 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "MockQueryable.Core/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/MockQueryable.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/MockQueryable.Core.dll": {}
+        }
+      },
+      "MockQueryable.EntityFrameworkCore/7.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.0",
+          "MockQueryable.Core": "7.0.0"
+        },
+        "compile": {
+          "lib/net6.0/MockQueryable.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/MockQueryable.EntityFrameworkCore.dll": {}
+        }
+      },
+      "MockQueryable.Moq/7.0.0": {
+        "type": "package",
+        "dependencies": {
+          "MockQueryable.EntityFrameworkCore": "7.0.0",
+          "Moq": "4.8.0"
+        },
+        "compile": {
+          "lib/net6.0/MockQueryable.Moq.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/MockQueryable.Moq.dll": {}
         }
       },
       "Moq/4.20.72": {
@@ -2957,6 +3011,37 @@
           "build/net6.0/xunit.runner.visualstudio.props": {}
         }
       },
+      "Discounts.API/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Asp.Versioning.Mvc": "8.1.1",
+          "Asp.Versioning.Mvc.ApiExplorer": "8.1.1",
+          "AspNetCore.HealthChecks.SqlServer": "9.0.0",
+          "Discounts.Application": "1.0.0",
+          "Discounts.Domain": "1.0.0",
+          "Discounts.Infrustructure": "1.0.0",
+          "Discounts.Persistance": "1.0.0",
+          "FluentValidation.AspNetCore": "11.3.1",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.23",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.23",
+          "Microsoft.AspNetCore.Mvc.Versioning": "5.1.0",
+          "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": "5.1.0",
+          "Microsoft.AspNetCore.OpenApi": "8.0.22",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.23",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.23",
+          "Swashbuckle.AspNetCore": "6.7.0"
+        },
+        "compile": {
+          "bin/placeholder/Discounts.API.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Discounts.API.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Discounts.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -3002,6 +3087,53 @@
         },
         "runtime": {
           "bin/placeholder/Discounts.Domain.dll": {}
+        }
+      },
+      "Discounts.Infrustructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Asp.Versioning.Mvc": "8.1.1",
+          "Asp.Versioning.Mvc.ApiExplorer": "8.1.1",
+          "AspNetCore.HealthChecks.SqlServer": "9.0.0",
+          "Discounts.Application": "1.0.0",
+          "Discounts.Domain": "1.0.0",
+          "Discounts.Persistance": "1.0.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.23",
+          "Microsoft.AspNetCore.Mvc.Versioning": "5.1.0",
+          "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": "5.1.0",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.23",
+          "Swashbuckle.AspNetCore": "6.7.0"
+        },
+        "compile": {
+          "bin/placeholder/Discounts.Infrustructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Discounts.Infrustructure.dll": {}
+        }
+      },
+      "Discounts.Persistance/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Asp.Versioning.Mvc": "8.1.1",
+          "Asp.Versioning.Mvc.ApiExplorer": "8.1.1",
+          "AspNetCore.HealthChecks.SqlServer": "9.0.0",
+          "Discounts.Domain": "1.0.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.23",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.23",
+          "Microsoft.AspNetCore.Mvc.Versioning": "5.1.0",
+          "Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer": "5.1.0",
+          "Microsoft.EntityFrameworkCore": "8.0.23",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.23",
+          "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.23",
+          "Swashbuckle.AspNetCore": "6.7.0"
+        },
+        "compile": {
+          "bin/placeholder/Discounts.Persistance.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Discounts.Persistance.dll": {}
         }
       }
     }
@@ -3422,6 +3554,21 @@
         "lib/netcoreapp3.1/Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.xml",
         "microsoft.aspnetcore.mvc.versioning.apiexplorer.5.1.0.nupkg.sha512",
         "microsoft.aspnetcore.mvc.versioning.apiexplorer.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.OpenApi/8.0.22": {
+      "sha512": "NljWP+NNJDu3Uls1OxiIrhOnhRTCdpJNLukJFMrBIPU1FyencrBFpgHiUuv/K5TqDPE7iKaZVreDSHSVhk4QrA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.openapi/8.0.22",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll",
+        "lib/net8.0/Microsoft.AspNetCore.OpenApi.xml",
+        "microsoft.aspnetcore.openapi.8.0.22.nupkg.sha512",
+        "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -4910,6 +5057,48 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "MockQueryable.Core/7.0.0": {
+      "sha512": "uLMBgYeUgaHLiUemXO7mNmyngY/a/uK1O0EsLK9jmeKwsq/0+aFjjdtotTpy7a/3LyPrEsJT7B855QUeZ69lYA==",
+      "type": "package",
+      "path": "mockqueryable.core/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/netstandard2.1/MockQueryable.Core.dll",
+        "logo.png",
+        "mockqueryable.core.7.0.0.nupkg.sha512",
+        "mockqueryable.core.nuspec"
+      ]
+    },
+    "MockQueryable.EntityFrameworkCore/7.0.0": {
+      "sha512": "T4VhG4T8gHuERxOM/HlR6MvU8/GHpOVZzIlNTXb4ranJGt9O8N8KkR76wNPYX8ZDWp3zqs5L4A0HnzLIfHIRRg==",
+      "type": "package",
+      "path": "mockqueryable.entityframeworkcore/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net6.0/MockQueryable.EntityFrameworkCore.dll",
+        "logo.png",
+        "mockqueryable.entityframeworkcore.7.0.0.nupkg.sha512",
+        "mockqueryable.entityframeworkcore.nuspec"
+      ]
+    },
+    "MockQueryable.Moq/7.0.0": {
+      "sha512": "1NWkaZui2eNXEHxzQUWJkuJjKCnayJ6T7mRVpDLWX0RHnr5MGlP/2LTFWa9xG6ym5G/+nein/iVmwsx2yt5l8Q==",
+      "type": "package",
+      "path": "mockqueryable.moq/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net6.0/MockQueryable.Moq.dll",
+        "logo.png",
+        "mockqueryable.moq.7.0.0.nupkg.sha512",
+        "mockqueryable.moq.nuspec"
       ]
     },
     "Moq/4.20.72": {
@@ -8837,6 +9026,11 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
+    "Discounts.API/1.0.0": {
+      "type": "project",
+      "path": "../Discounts.API/Discounts.API.csproj",
+      "msbuildProject": "../Discounts.API/Discounts.API.csproj"
+    },
     "Discounts.Application/1.0.0": {
       "type": "project",
       "path": "../Discounts.Application/Discounts.Application.csproj",
@@ -8846,13 +9040,27 @@
       "type": "project",
       "path": "../Discounts.Domain/Discounts.Domain.csproj",
       "msbuildProject": "../Discounts.Domain/Discounts.Domain.csproj"
+    },
+    "Discounts.Infrustructure/1.0.0": {
+      "type": "project",
+      "path": "../Discounts.Infrustructure/Discounts.Infrustructure.csproj",
+      "msbuildProject": "../Discounts.Infrustructure/Discounts.Infrustructure.csproj"
+    },
+    "Discounts.Persistance/1.0.0": {
+      "type": "project",
+      "path": "../Discounts.Persistance/Discounts.Persistance.csproj",
+      "msbuildProject": "../Discounts.Persistance/Discounts.Persistance.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Discounts.API >= 1.0.0",
       "Discounts.Application >= 1.0.0",
+      "Discounts.Infrustructure >= 1.0.0",
+      "Discounts.Persistance >= 1.0.0",
       "FluentAssertions >= 8.8.0",
       "Microsoft.NET.Test.Sdk >= 17.8.0",
+      "MockQueryable.Moq >= 7.0.0",
       "Moq >= 4.20.72",
       "coverlet.collector >= 6.0.0",
       "xunit >= 2.5.3",
@@ -8884,8 +9092,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.API/Discounts.API.csproj": {
+              "projectPath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.API/Discounts.API.csproj"
+            },
             "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/Discounts.Application.csproj": {
               "projectPath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application/Discounts.Application.csproj"
+            },
+            "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Infrustructure/Discounts.Infrustructure.csproj": {
+              "projectPath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Infrustructure/Discounts.Infrustructure.csproj"
+            },
+            "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/Discounts.Persistance.csproj": {
+              "projectPath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Persistance/Discounts.Persistance.csproj"
             }
           }
         }
@@ -8912,6 +9129,10 @@
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.8.0, )"
+          },
+          "MockQueryable.Moq": {
+            "target": "Package",
+            "version": "[7.0.0, )"
           },
           "Moq": {
             "target": "Package",

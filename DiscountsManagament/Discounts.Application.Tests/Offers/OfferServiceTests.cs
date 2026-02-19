@@ -9,7 +9,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Moq;
-
+using Discounts.Domain.Entity;
 namespace Discounts.Application.Tests.Offers
 {
     public class OfferServiceTests
@@ -187,7 +187,7 @@ namespace Discounts.Application.Tests.Offers
                 Merchant = merchant,
                 Category = new Category { Id = 1 }
             };
-            var settings = new GlobalSettings { MerchantEditWindowHours = 24 };
+            var settings = new Domain.Entity.GlobalSettings { MerchantEditWindowHours = 24 };
             var request = new UpdateOfferRequestDto
             {
                 Title = "Updated Title",
@@ -294,7 +294,7 @@ namespace Discounts.Application.Tests.Offers
                 Merchant = merchant,
                 Category = new Category()
             };
-            var settings = new GlobalSettings { MerchantEditWindowHours = 24 };
+            var settings = new Domain.Entity.GlobalSettings { MerchantEditWindowHours = 24 };
 
             _unitOfWorkMock.Setup(x => x.Merchants.GetByUserIdAsync(merchantUserId, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(merchant);

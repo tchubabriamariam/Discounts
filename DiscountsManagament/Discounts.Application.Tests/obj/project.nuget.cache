@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "o7Qd+im0RJU=",
+  "dgSpecHash": "N38VgO4Bx8Y=",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Application.Tests/Discounts.Application.Tests.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.identity.entityframeworkcore/8.0.23/microsoft.aspnetcore.identity.entityframeworkcore.8.0.23.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.mvc.versioning/5.1.0/microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.mvc.versioning.apiexplorer/5.1.0/microsoft.aspnetcore.mvc.versioning.apiexplorer.5.1.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/microsoft.aspnetcore.openapi/8.0.22/microsoft.aspnetcore.openapi.8.0.22.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.codecoverage/17.8.0/microsoft.codecoverage.17.8.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.data.sqlclient/5.2.2/microsoft.data.sqlclient.5.2.2.nupkg.sha512",
@@ -67,6 +68,9 @@
     "/Users/admin/.nuget/packages/microsoft.testplatform.objectmodel/17.8.0/microsoft.testplatform.objectmodel.17.8.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.testplatform.testhost/17.8.0/microsoft.testplatform.testhost.17.8.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.win32.primitives/4.3.0/microsoft.win32.primitives.4.3.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/mockqueryable.core/7.0.0/mockqueryable.core.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/mockqueryable.entityframeworkcore/7.0.0/mockqueryable.entityframeworkcore.7.0.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/mockqueryable.moq/7.0.0/mockqueryable.moq.7.0.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/moq/4.20.72/moq.4.20.72.nupkg.sha512",
     "/Users/admin/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",

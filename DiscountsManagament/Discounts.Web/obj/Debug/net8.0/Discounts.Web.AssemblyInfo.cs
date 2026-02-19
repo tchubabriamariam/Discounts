@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Discounts.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+123c1470b6f7b7859d76edfe78aae3207d4a740f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc99f22427f4eba640bd069cd0d03361a6cac703")]
 [assembly: System.Reflection.AssemblyProductAttribute("Discounts.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Discounts.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

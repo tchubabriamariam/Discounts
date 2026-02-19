@@ -46,7 +46,7 @@ namespace Discounts.Application.Tests.Reservations
             Merchant = new Merchant { CompanyName = "Test" },
             Category = new Category { Name = "Food" }
         };
-        var settings = new GlobalSettings { ReservationDurationMinutes = 30 };
+        var settings = new Domain.Entity.GlobalSettings { ReservationDurationMinutes = 30 };
         var request = new CreateReservationRequestDto { OfferId = 1, Quantity = 5 };
 
         _userManagerMock.Setup(x => x.FindByIdAsync(userId)).ReturnsAsync(user);
