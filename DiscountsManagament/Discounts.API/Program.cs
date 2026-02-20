@@ -16,8 +16,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// logging
+builder.Logging.ClearProviders();
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 
@@ -38,6 +46,9 @@ builder.Services.AddApiVersioning(options =>
     });
 
 builder.Services.AddServices(); // this is services extention
+builder.Logging.ClearProviders(); // logging
+builder.Logging.AddConsole(); // logging
+builder.Logging.AddDebug(); // logging
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -117,6 +128,7 @@ builder.Services.AddHealthChecks()
 builder.Services.RegisterMaps();
 //MapsterConfiguration.RegisterMaps(builder.Services); // could also write this so rider will not suggest redundant but i perfer first one
 
+Log.Information("Starting Discounts API");
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -135,8 +147,30 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapHealthChecks("/health");
+app.UseSerilogRequestLogging();
 app.MapControllers();
+app.MapHealthChecks("/health");
 
-app.Run();
+try
+{
+    // Log.Information("Starting Discounts API"); // moved up so it can be first thing to be logged
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await db.Database.MigrateAsync().ConfigureAwait(false);
+    }
+
+    await app.RunAsync();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "API host terminated unexpectedly");
+    throw;
+}
+finally
+{
+    await Log.CloseAndFlushAsync();
+}
+
+
+

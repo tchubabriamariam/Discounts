@@ -106,6 +106,18 @@
               "target": "Package",
               "version": "[8.0.23, )"
             },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.2-dev-02418, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[10.0.1-dev-02330, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.7.0, )"
@@ -217,6 +229,18 @@
               "target": "Package",
               "version": "[8.0.23, )"
             },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.2-dev-02418, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[10.0.1-dev-02330, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.7.0, )"
@@ -327,6 +351,18 @@
               "target": "Package",
               "version": "[8.0.23, )"
             },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.2-dev-02418, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[10.0.1-dev-02330, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.7.0, )"
@@ -428,6 +464,18 @@
             "Microsoft.Extensions.Diagnostics.HealthChecks": {
               "target": "Package",
               "version": "[8.0.23, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.2-dev-02418, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[10.0.1-dev-02330, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -542,6 +590,18 @@
             "Microsoft.Extensions.Diagnostics.HealthChecks": {
               "target": "Package",
               "version": "[8.0.23, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.3.2-dev-02418, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[10.0.1-dev-02330, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

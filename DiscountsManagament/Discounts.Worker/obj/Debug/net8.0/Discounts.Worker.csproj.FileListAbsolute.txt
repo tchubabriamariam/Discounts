@@ -128,3 +128,13 @@
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/obj/Debug/net8.0/Discounts.Worker.pdb
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/obj/Debug/net8.0/Discounts.Worker.genruntimeconfig.cache
 /Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/obj/Debug/net8.0/ref/Discounts.Worker.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.AspNetCore.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Extensions.Hosting.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Extensions.Logging.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Formatting.Compact.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Settings.Configuration.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Sinks.Console.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Sinks.Debug.dll
+/Users/admin/Desktop/Discounts/DiscountsManagament/Discounts.Worker/bin/Debug/net8.0/Serilog.Sinks.File.dll
