@@ -111,6 +111,32 @@ namespace Discounts.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterCustomerRequestDto model)
         {
+            // Extra validation for required fields
+            if (string.IsNullOrWhiteSpace(model?.FirstName))
+            {
+                ModelState.AddModelError(nameof(RegisterCustomerRequestDto.FirstName), "First name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model?.LastName))
+            {
+                ModelState.AddModelError(nameof(RegisterCustomerRequestDto.LastName), "Last name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model?.Email))
+            {
+                ModelState.AddModelError(nameof(RegisterCustomerRequestDto.Email), "Email is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model?.Password))
+            {
+                ModelState.AddModelError(nameof(RegisterCustomerRequestDto.Password), "Password is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model?.ConfirmPassword))
+            {
+                ModelState.AddModelError(nameof(RegisterCustomerRequestDto.ConfirmPassword), "Confirm password is required.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -118,7 +144,7 @@ namespace Discounts.Web.Controllers
 
             try
             {
-                await _authService.RegisterCustomerAsync(model);
+                await _authService.RegisterCustomerAsync(model!);
                 TempData["SuccessMessage"] = "Registration successful! Please login.";
                 return RedirectToAction(nameof(Login));
             }
@@ -139,6 +165,22 @@ namespace Discounts.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterMerchant(RegisterMerchantRequestDto model)
         {
+            // Extra validation for required fields
+            if (string.IsNullOrWhiteSpace(model?.Email))
+            {
+                ModelState.AddModelError(nameof(RegisterMerchantRequestDto.Email), "Email is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model?.Password))
+            {
+                ModelState.AddModelError(nameof(RegisterMerchantRequestDto.Password), "Password is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model?.ConfirmPassword))
+            {
+                ModelState.AddModelError(nameof(RegisterMerchantRequestDto.ConfirmPassword), "Confirm password is required.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -146,7 +188,7 @@ namespace Discounts.Web.Controllers
 
             try
             {
-                await _authService.RegisterMerchantAsync(model);
+                await _authService.RegisterMerchantAsync(model!);
                 TempData["SuccessMessage"] = "Merchant registration successful! Please login.";
                 return RedirectToAction(nameof(Login));
             }
