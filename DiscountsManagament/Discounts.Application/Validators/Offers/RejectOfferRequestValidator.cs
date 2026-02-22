@@ -9,7 +9,7 @@ namespace Discounts.Application.Validators.Offers
     {
         public RejectOfferRequestValidator() =>
             RuleFor(x => x.Reason)
-                .NotEmpty().WithMessage("Rejection reason is required.")
-                .MaximumLength(500).WithMessage("Reason cannot exceed 500 characters.");
+                .NotEmpty().WithMessage("Rejection reason is required")
+                .MaximumLength(500).WithMessage("Reason can't be more then 500 characters");
     }
 }

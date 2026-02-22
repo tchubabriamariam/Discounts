@@ -10,11 +10,11 @@ namespace Discounts.Application.Validators.Reservations
         public CreateReservationRequestValidator()
         {
             RuleFor(x => x.OfferId)
-                .GreaterThan(0).WithMessage("Offer ID must be greater than 0.");
+                .GreaterThan(0).WithMessage("Offer ID must be greater than 0");
 
             RuleFor(x => x.Quantity)
-                .GreaterThan(0).WithMessage("Quantity must be at least 1.")
-                .LessThanOrEqualTo(10).WithMessage("Cannot reserve more than 10 coupons at once.");
+                .GreaterThan(0).WithMessage("Quantity must be at least 1")
+                .LessThanOrEqualTo(10).WithMessage("Cannot reserve more than 10 coupons at once");
         }
     }
 }

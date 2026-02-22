@@ -49,7 +49,11 @@ namespace Discounts.Application.Services.Implementations
                 UserName = request.Email,
                 Email = request.Email,
                 FirstName = request.FirstName,
-                LastName = request.LastName
+                LastName = request.LastName,
+                Balance = request.InitialBalance,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+
             };
 
             var result = await _userManager.CreateAsync(user, request.Password).ConfigureAwait(false);
@@ -138,8 +142,8 @@ namespace Discounts.Application.Services.Implementations
             return token;
         }
 
-        // ── Private helpers ───────────────────────────────────────────────────────
 
+        // these are helpers
         private async Task<AuthResponseDto> GenerateJwtTokenAsync(ApplicationUser user)
         {
             var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);

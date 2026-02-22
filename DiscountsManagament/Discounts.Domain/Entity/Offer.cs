@@ -28,7 +28,7 @@ namespace Discounts.Domain.Entity
         public DateTime? ApprovedAt { get; set; }
         public string? ApprovedByAdminId { get; set; }
 
-        // this is caluclated
+        // this is caluclated in here
         public decimal DiscountPercentage =>
             OriginalPrice > 0
                 ? Math.Round((OriginalPrice - DiscountedPrice) / OriginalPrice * 100, 2)

@@ -32,6 +32,11 @@ namespace Discounts.Application.Validators
             RuleFor(x => x.ConfirmPassword)
                 .NotEmpty().WithMessage("confirm password is required")
                 .Equal(x => x.Password).WithMessage("passwords do not match");
+
+            // this is added for customer to choose their own balance
+            RuleFor(x => x.InitialBalance)
+                .GreaterThanOrEqualTo(0).WithMessage("Initial balance cannot be negative")
+                .LessThanOrEqualTo(10000).WithMessage("Initial balance cannot exceed ₾10,000"); // i assume we use lari
         }
     }
 }

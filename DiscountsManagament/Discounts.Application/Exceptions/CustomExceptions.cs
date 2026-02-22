@@ -14,7 +14,7 @@ namespace Discounts.Application.Exceptions
         }
     }
 
-// 404 Not Found
+    // 404 Not Found
     public class NotFoundException : DiscountsException
     {
         public NotFoundException(string message) : base(message)
@@ -27,7 +27,7 @@ namespace Discounts.Application.Exceptions
         }
     }
 
-// 409 Conflict
+    // 409 Conflict
     public class AlreadyExistsException : DiscountsException
     {
         public AlreadyExistsException(string message) : base(message)
@@ -40,7 +40,7 @@ namespace Discounts.Application.Exceptions
         }
     }
 
-// 401 Unauthorized
+    // 401 Unauthorized
     public class UnauthorizedException : DiscountsException
     {
         public UnauthorizedException(string message) : base(message)
@@ -48,7 +48,7 @@ namespace Discounts.Application.Exceptions
         }
     }
 
-// 403 Forbidden
+    // 403 Forbidden
     public class ForbiddenException : DiscountsException
     {
         public ForbiddenException(string message) : base(message)
@@ -56,7 +56,7 @@ namespace Discounts.Application.Exceptions
         }
     }
 
-// 400 Bad Request , Generic validation
+    // 400 Bad Request , Generic validation
     public class ValidationException : DiscountsException
     {
         public ValidationException(string message) : base(message)
@@ -66,7 +66,7 @@ namespace Discounts.Application.Exceptions
         public Dictionary<string, string[]>? Errors { get; set; }
     }
 
-// 400 Business rule violations
+    // 400 Business rule violations
     public class BusinessRuleViolationException : DiscountsException
     {
         public BusinessRuleViolationException(string message) : base(message)

@@ -6,10 +6,10 @@ namespace Discounts.Domain.Entity
     {
         public int Id { get; set; }
 
-        // How long (minutes) a reservation is held before being auto-cancelled
+        // How long a reservation is held before being auto-cancelled, this is in minutes
         public int ReservationDurationMinutes { get; set; } = 30;
 
-        // How long (hours) a merchant can edit their offer after creation
+        // How long a merchant can edit their offer after creation, this is in hours
         public int MerchantEditWindowHours { get; set; } = 24;
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

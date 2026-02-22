@@ -10,6 +10,6 @@ namespace Discounts.Application.DTOs
         public string LastName { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
         public int? MerchantId { get; set; }
-        public DateTime ExpiresAt { get; set; }
+        public DateTime ExpiresAt { get; set; } 
     }
 }

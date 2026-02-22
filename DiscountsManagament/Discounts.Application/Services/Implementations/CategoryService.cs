@@ -150,7 +150,7 @@ namespace Discounts.Application.Services.Implementations
             return result.OrderBy(c => c.Name);
         }
 
-        // ── Public ────────────────────────────────────────────────────────────────
+
 
         public async Task<IEnumerable<CategoryResponseDto>> GetActiveCategoriesAsync(
             CancellationToken cancellationToken = default)
@@ -176,8 +176,8 @@ namespace Discounts.Application.Services.Implementations
             return await MapToCategoryResponseAsync(category).ConfigureAwait(false);
         }
 
-        // ── Helper ────────────────────────────────────────────────────────────────
 
+        // this is a helper
         private async Task<CategoryResponseDto> MapToCategoryResponseAsync(Category category)
         {
             var offers = await _unitOfWork.Offers.GetByCategoryIdAsync(category.Id).ConfigureAwait(false);
