@@ -34,7 +34,12 @@ namespace Discounts.Application.Tests.Offers
         {
             // Arrange
             var merchantUserId = "merchant-123";
-            var merchant = new Merchant { Id = 1, UserId = merchantUserId, CompanyName = "Test Company" };
+            var merchant = new Merchant
+            {
+                Id = 1,
+                UserId = merchantUserId,
+                IsVerified = true
+            };
             var category = new Category { Id = 1, Name = "Food", IsActive = true };
             var request = new CreateOfferRequestDto
             {
@@ -92,7 +97,7 @@ namespace Discounts.Application.Tests.Offers
         {
             // Arrange
             var merchantUserId = "merchant-123";
-            var merchant = new Merchant { Id = 1, UserId = merchantUserId };
+            var merchant = new Merchant { Id = 1, UserId = merchantUserId, IsVerified = true };
             var request = new CreateOfferRequestDto { CategoryId = 999 };
 
             _unitOfWorkMock.Setup(x => x.Merchants.GetByUserIdAsync(merchantUserId, It.IsAny<CancellationToken>()))
@@ -115,7 +120,7 @@ namespace Discounts.Application.Tests.Offers
         {
             // Arrange
             var merchantUserId = "merchant-123";
-            var merchant = new Merchant { Id = 1, UserId = merchantUserId };
+            var merchant = new Merchant { Id = 1, UserId = merchantUserId, IsVerified = true };
             var category = new Category { Id = 1 };
             var request = new CreateOfferRequestDto
             {
@@ -144,7 +149,7 @@ namespace Discounts.Application.Tests.Offers
         {
             // Arrange
             var merchantUserId = "merchant-123";
-            var merchant = new Merchant { Id = 1, UserId = merchantUserId };
+            var merchant = new Merchant { Id = 1, UserId = merchantUserId, IsVerified = true };
             var category = new Category { Id = 1 };
             var request = new CreateOfferRequestDto
             {

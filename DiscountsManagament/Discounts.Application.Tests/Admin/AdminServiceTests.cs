@@ -430,6 +430,8 @@ namespace Discounts.Application.Tests.Admin
                 .ReturnsAsync(new List<string> { Roles.Customer });
             _userManagerMock.Setup(x => x.UpdateAsync(It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(IdentityResult.Success);
+            _unitOfWorkMock.Setup(x => x.Merchants.GetByUserIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Merchant?)null);
 
             // Act
             await _service.DeleteUserAsync(userId);
