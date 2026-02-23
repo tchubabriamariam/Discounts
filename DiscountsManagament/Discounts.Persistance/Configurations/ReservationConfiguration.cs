@@ -28,8 +28,9 @@ namespace Discounts.Persistance.Configurations
                 .HasDefaultValueSql("GETUTCDATE()");
 
             // A user can only have one active reservation per offer at a time
+            // 2 rows cant have same user same offer and status activew,
             builder.HasIndex(r => new { r.UserId, r.OfferId, r.Status })
-                .HasFilter("[Status] = 0")
+                .HasFilter("[Status] = 0") // only making this unique rule if status is active otherwise no condition
                 .IsUnique();
 
             builder.HasQueryFilter(r => !r.IsDeleted);

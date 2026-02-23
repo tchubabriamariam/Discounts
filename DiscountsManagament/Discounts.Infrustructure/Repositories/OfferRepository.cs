@@ -18,6 +18,8 @@ namespace Discounts.Infrustructure.Repositories
             CancellationToken cancellationToken = default) =>
             await _dbSet
                 .Where(o => o.MerchantId == merchantId)
+                .Include(o => o.Category)
+                .Include(o => o.Merchant)
                 .ToListAsync(cancellationToken).ConfigureAwait(false);
 
         public async Task<IEnumerable<Offer>> GetByCategoryIdAsync(int categoryId,

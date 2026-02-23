@@ -32,7 +32,7 @@ namespace Discounts.Persistance.Configurations
                 .HasMaxLength(500);
 
             builder.Property(m => m.UserId)
-                .IsRequired();
+                .IsRequired(); // cant exist without user, it should be linked
 
             builder.HasIndex(m => m.UserId)
                 .IsUnique();

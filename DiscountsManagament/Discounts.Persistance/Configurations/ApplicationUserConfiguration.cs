@@ -27,7 +27,7 @@ namespace Discounts.Persistance.Configurations
 
             builder.HasOne(u => u.Merchant)
                 .WithOne(m => m.User)
-                .HasForeignKey<Merchant>(m => m.UserId)
+                .HasForeignKey<Merchant>(m => m.UserId) // putting userid inside merchant's table
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(u => u.Coupons)
@@ -41,7 +41,7 @@ namespace Discounts.Persistance.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Soft delete filter
-            builder.HasQueryFilter(u => !u.IsDeleted);
+            builder.HasQueryFilter(u => !u.IsDeleted); // this sets (Where isDeleted=0)
         }
     }
 }

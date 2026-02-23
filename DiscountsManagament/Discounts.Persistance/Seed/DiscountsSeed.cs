@@ -36,7 +36,7 @@ namespace Discounts.Persistance.Seed
                     Id = AdminRoleId,
                     Name = Roles.Admin,
                     NormalizedName = Roles.Admin.ToUpperInvariant(),
-                    ConcurrencyStamp = AdminRoleId
+                    ConcurrencyStamp = AdminRoleId // to not egenerate extra migration file
                 },
                 new IdentityRole
                 {
@@ -122,64 +122,64 @@ namespace Discounts.Persistance.Seed
                 new Category
                 {
                     Id = 1,
-                    Name = "რესტორნები",
-                    Description = "საკვები და სასმელი",
+                    Name = "Restaurants",
+                    Description = "Food and Drinks",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 2,
-                    Name = "ტურიზმი",
-                    Description = "მოგზაურობა და სასტუმრო",
+                    Name = "Tourism",
+                    Description = "Travel and Hotels",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 3,
-                    Name = "სილამაზე",
-                    Description = "სალონები და სპა",
+                    Name = "Beauty",
+                    Description = "Salons and Spa",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 4,
-                    Name = "სპორტი",
-                    Description = "სპორტული კლუბები და ტრენინგები",
+                    Name = "Sports",
+                    Description = "Gyms and Training",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 5,
-                    Name = "გართობა",
-                    Description = "კინო, თეატრი, ღონისძიებები",
+                    Name = "Entertainment",
+                    Description = "Cinema, Theater, Events",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 6,
-                    Name = "ჯანდაცვა",
-                    Description = "კლინიკები და ფარმაცია",
+                    Name = "Healthcare",
+                    Description = "Clinics and Pharmacy",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 7,
-                    Name = "განათლება",
-                    Description = "კურსები და ტრენინგები",
+                    Name = "Education",
+                    Description = "Courses and Trainings",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 8,
-                    Name = "ავტომობილი",
-                    Description = "ავტო სერვისები",
+                    Name = "Automotive",
+                    Description = "Car Services",
                     IsActive = true,
                     CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 }
@@ -219,9 +219,10 @@ namespace Discounts.Persistance.Seed
                 {
                     Id = 1,
                     MerchantId = 1,
-                    CategoryId = 1,
-                    Title = "2-სეტიანი სადილი 50% ფასდაკლებით",
-                    Description = "ორი ადამიანისთვის სრული სადილი: წვნიანი, მთავარი კერძი და დესერტი.",
+                    CategoryId = 2,
+                    Title = "Miller’s Planet Escape: 1 Hour Here, 7 Years Savings",
+                    Description = "Take a leap through the wormhole. Includes a gravity-defying stay at our orbital lounge. Tars and Case robots included for navigation.",
+                    ImageUrl = "https://www.oberlin.edu/sites/default/files/styles/width_760/public/content/news/image/wormhole.1_0.png?itok=ARTDejwP",
                     OriginalPrice = 80.00m,
                     DiscountedPrice = 40.00m,
                     TotalCoupons = 50,
@@ -231,15 +232,16 @@ namespace Discounts.Persistance.Seed
                     Status = OfferStatus.Approved,
                     ApprovedAt = new DateTime(2025, 1, 2, 0, 0, 0, DateTimeKind.Utc),
                     ApprovedByAdminId = AdminUserId,
-                    CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 },
                 new Offer
                 {
                     Id = 2,
                     MerchantId = 1,
-                    CategoryId = 3,
-                    Title = "სპა-პაკეტი 30% ფასდაკლებით",
-                    Description = "სრული სხეულის მასაჟი და სახის მოვლა 2 საათის განმავლობაში.",
+                    CategoryId = 7,
+                    Title = "Heptapod Linguistics: Learn to See the Future",
+                    Description = "Master the non-linear orthography of the 'Abbott and Costello' dialect. Guaranteed to change your perception of time.",
+                    ImageUrl = "https://cdn.prod.website-files.com/639281d335ff5f86b30762e7/66fc20b9f3b199dfac4d4fec_66dc6b9f567f3167369a70a4_AD_4nXfU8j7VSRdch-FEQ5oA6pNRZ3xETFikaUUFCmcSD9osvn8X-lk5i5CZvrKTzE0zjglWsBRV77M3n8Thwp6cuhCHI9RyuyZaTwnvYL_y283XwUx0wAI_mzKBNTrMj86nmYwuXLh9zYHjcIO9K9PyFzRS4Ms.png",
                     OriginalPrice = 120.00m,
                     DiscountedPrice = 84.00m,
                     TotalCoupons = 20,

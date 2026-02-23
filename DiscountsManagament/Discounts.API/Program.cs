@@ -131,11 +131,11 @@ builder.Services.RegisterMaps();
 Log.Information("Starting Discounts API");
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await db.Database.MigrateAsync().ConfigureAwait(false);
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+//     await db.Database.MigrateAsync().ConfigureAwait(false);
+// }
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 if (app.Environment.IsDevelopment())

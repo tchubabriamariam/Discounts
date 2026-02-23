@@ -32,7 +32,7 @@ namespace Discounts.Persistance.Configurations
                 .HasDefaultValue(CouponStatus.Active);
 
             builder.Property(c => c.PurchasedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("GETUTCDATE()"); // caluclating time in exact moment when created
 
             builder.HasQueryFilter(c => !c.IsDeleted);
         }

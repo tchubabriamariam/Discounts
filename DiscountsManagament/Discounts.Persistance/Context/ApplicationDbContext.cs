@@ -24,7 +24,7 @@ namespace Discounts.Persistance.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder); // setting up default identity tables
 
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
@@ -43,12 +43,13 @@ namespace Discounts.Persistance.Context
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            SetAuditFields();
+            SetAuditFields(); // timestamps held automatically
             return base.SaveChangesAsync(cancellationToken);
         }
 
         public override int SaveChanges()
         {
+            // since i created async now synchronous is needed too
             SetAuditFields();
             return base.SaveChanges();
         }
