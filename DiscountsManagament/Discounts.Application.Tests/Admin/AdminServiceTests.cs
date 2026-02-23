@@ -20,6 +20,7 @@ namespace Discounts.Application.Tests.Admin
         private readonly Mock<ILogger<AdminService>> _loggerMock;
         private readonly AdminService _service;
 
+        // xUnit.net tests run without a SynchronizationContext, so ConfigureAwait(false) has no effect and is unnecessary
         public AdminServiceTests()
         {
             _userManagerMock = MockUserManager();
@@ -47,7 +48,7 @@ namespace Discounts.Application.Tests.Admin
                 .ReturnsAsync(new List<string> { Roles.Customer });
 
             // Act
-            var result = await _service.GetAllUsersAsync(null);
+            var result = await _service.GetAllUsersAsync(null).ConfigureAwait(false);
 
             // Assert
             result.Should().HaveCount(3);
@@ -70,7 +71,7 @@ namespace Discounts.Application.Tests.Admin
                 .ReturnsAsync(new List<string> { Roles.Merchant });
 
             // Act
-            var result = await _service.GetAllUsersAsync(Roles.Admin);
+            var result = await _service.GetAllUsersAsync(Roles.Admin).ConfigureAwait(false);
 
             // Assert
             result.Should().HaveCount(1);
@@ -237,7 +238,7 @@ namespace Discounts.Application.Tests.Admin
             _userManagerMock.Setup(x => x.FindByIdAsync(userId)).ReturnsAsync((ApplicationUser?)null);
 
             // Act
-            Func<Task> act = async () => await _service.BlockUserAsync(userId);
+            Func<Task> act = async () => await _service.BlockUserAsync(userId).ConfigureAwait(false);
 
             // Assert
             await act.Should().ThrowAsync<NotFoundException>();
@@ -255,7 +256,7 @@ namespace Discounts.Application.Tests.Admin
                 .ReturnsAsync(new List<string> { Roles.Admin });
 
             // Act
-            Func<Task> act = async () => await _service.BlockUserAsync(userId);
+            Func<Task> act = async () => await _service.BlockUserAsync(userId).ConfigureAwait(false);
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
@@ -274,7 +275,7 @@ namespace Discounts.Application.Tests.Admin
                 .ReturnsAsync(new List<string> { Roles.Customer });
 
             // Act
-            Func<Task> act = async () => await _service.BlockUserAsync(userId);
+            Func<Task> act = async () => await _service.BlockUserAsync(userId).ConfigureAwait(false);
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
@@ -466,6 +467,7 @@ namespace Discounts.Application.Tests.Admin
 
         private static Mock<UserManager<ApplicationUser>> MockUserManager()
         {
+            // store is responsible for database operations, create,update delete other dependencies can be null
             var store = new Mock<IUserStore<ApplicationUser>>();
             return new Mock<UserManager<ApplicationUser>>(
                 store.Object, null, null, null, null, null, null, null, null);

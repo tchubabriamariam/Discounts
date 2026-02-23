@@ -2,6 +2,7 @@
 
 using Discounts.Application.DTOs.Offers;
 using Discounts.Application.IRepositories;
+using Discounts.Application.Mapping;
 using Discounts.Application.Services.Implementations;
 using Discounts.Domain.Entity;
 using Discounts.Domain.Enums;
@@ -10,6 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Discounts.Domain.Entity;
+using Microsoft.Extensions.DependencyInjection;
+using MockQueryable.Moq;
+
 namespace Discounts.Application.Tests.Offers
 {
     public class OfferServiceTests
@@ -25,6 +29,7 @@ namespace Discounts.Application.Tests.Offers
             _userManagerMock = MockUserManager();
             _loggerMock = new Mock<ILogger<OfferService>>();
             _service = new OfferService(_unitOfWorkMock.Object, _userManagerMock.Object, _loggerMock.Object);
+            MapsterConfiguration.RegisterMaps(new ServiceCollection());
         }
 
         #region CreateOfferAsync Tests
@@ -110,7 +115,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Category not found.");
+                .WithMessage("Category not found");
         }
 
         [Fact(DisplayName =
@@ -141,7 +146,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Discounted price must be less than original price.");
+                .WithMessage("Discounted price must be less than original price");
         }
 
         [Fact(DisplayName = "When end date is before or equal to start date should throw invalid operation exception")]
@@ -170,7 +175,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("End date must be after start date.");
+                .WithMessage("End date must be after start date");
         }
 
         #endregion
@@ -238,7 +243,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Merchant profile not found.");
+                .WithMessage("Merchant profile not found");
         }
 
         [Fact(DisplayName = "When offer does not exist should throw invalid operation exception")]
@@ -258,7 +263,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Offer not found.");
+                .WithMessage("Offer not found");
         }
 
         [Fact(DisplayName = "When merchant does not own the offer should throw unauthorized access exception")]
@@ -282,7 +287,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<UnauthorizedAccessException>()
-                .WithMessage("You do not own this offer.");
+                .WithMessage("You do not own this offer");
         }
 
         [Fact(DisplayName = "When edit window has expired should throw invalid operation exception")]
@@ -363,7 +368,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Offer not found.");
+                .WithMessage("Offer not found");
         }
 
         [Fact(DisplayName = "When offer is not pending should throw invalid operation exception")]
@@ -385,7 +390,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Only pending offers can be approved.");
+                .WithMessage("Only pending offers can be approved");
         }
 
         #endregion
@@ -431,7 +436,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Offer not found.");
+                .WithMessage("Offer not found");
         }
 
         [Fact(DisplayName = "When offer is not pending should throw invalid operation exception")]
@@ -451,7 +456,7 @@ namespace Discounts.Application.Tests.Offers
 
             // Assert
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Only pending offers can be rejected.");
+                .WithMessage("Only pending offers can be rejected");
         }
 
         #endregion
@@ -710,18 +715,17 @@ namespace Discounts.Application.Tests.Offers
                     UserId = "customer-1",
                     Code = "ABC123",
                     PricePaid = 50m,
-                    Offer = offer
+                    Offer = offer,
+                    User = user
                 }
             };
 
+            var mockQueryable = coupons.AsQueryable().BuildMock();
+
+            _unitOfWorkMock.Setup(x => x.Coupons.Query())
+                .Returns(mockQueryable);
             _unitOfWorkMock.Setup(x => x.Merchants.GetByUserIdAsync(merchantUserId, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(merchant);
-            _unitOfWorkMock.Setup(x => x.Offers.GetByMerchantIdAsync(1, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<Offer> { offer });
-            _unitOfWorkMock.Setup(x => x.Coupons.GetByOfferIdAsync(1, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(coupons);
-            _userManagerMock.Setup(x => x.FindByIdAsync("customer-1")).ReturnsAsync(user);
-
             // Act
             var result = await _service.GetSalesHistoryAsync(merchantUserId);
 

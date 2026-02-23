@@ -10,5 +10,9 @@ namespace Discounts.Application.IRepositories
 
         // this is for redundant names we don't want 2 categories with same name, TBC and tbc is the same
         Task<bool> NameExistsAsync(string name, CancellationToken cancellationToken = default);
+
+
+        Task<bool> NameExistsAsync(string name, int excludeCategoryId, CancellationToken cancellationToken = default);
+
     }
 }

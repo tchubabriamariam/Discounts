@@ -52,7 +52,7 @@ namespace Discounts.Application.Services.Implementations
 
             if (category.Name != request.Name)
             {
-                var nameExists = await _unitOfWork.Categories.NameExistsAsync(request.Name, cancellationToken)
+                var nameExists = await _unitOfWork.Categories.NameExistsAsync(request.Name,categoryId, cancellationToken)
                     .ConfigureAwait(false);
 
                 if (nameExists) throw new AlreadyExistsException("Category", "Name", request.Name);

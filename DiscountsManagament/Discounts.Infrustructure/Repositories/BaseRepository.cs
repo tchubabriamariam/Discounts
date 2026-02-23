@@ -19,8 +19,9 @@ namespace Discounts.Infrustructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default) =>
-            await _dbSet.FindAsync([id], cancellationToken).ConfigureAwait(false);
+        public Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default) {
+            return _dbSet.FindAsync(new object[] { id }, cancellationToken).AsTask();
+        }
 
         public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default) =>
             await _dbSet.ToListAsync(cancellationToken).ConfigureAwait(false);
@@ -29,13 +30,15 @@ namespace Discounts.Infrustructure.Repositories
             CancellationToken cancellationToken = default) =>
             await _dbSet.Where(predicate).ToListAsync(cancellationToken).ConfigureAwait(false);
 
-        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate,
-            CancellationToken cancellationToken = default) =>
-            await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken).ConfigureAwait(false);
+        public Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate,
+            CancellationToken cancellationToken = default){
+            return _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
+        }
 
-        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate,
-            CancellationToken cancellationToken = default) =>
-            await _dbSet.AnyAsync(predicate, cancellationToken).ConfigureAwait(false);
+        public Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate,
+            CancellationToken cancellationToken = default) {
+            return _dbSet.AnyAsync(predicate, cancellationToken);
+        }
 
         public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null,
             CancellationToken cancellationToken = default)
@@ -45,11 +48,13 @@ namespace Discounts.Infrustructure.Repositories
             return await _dbSet.CountAsync(predicate, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task AddAsync(T entity, CancellationToken cancellationToken = default) =>
-            await _dbSet.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+        public Task AddAsync(T entity, CancellationToken cancellationToken = default){
+            return _dbSet.AddAsync(entity, cancellationToken).AsTask();
+        }
 
-        public async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default) =>
-            await _dbSet.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
+        public Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default) {
+            return _dbSet.AddRangeAsync(entities, cancellationToken);
+        }
 
         public void Update(T entity) => _dbSet.Update(entity);
 

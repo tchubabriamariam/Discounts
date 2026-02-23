@@ -219,7 +219,7 @@ namespace Discounts.Application.Tests.GlobalSettings
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
-                .WithMessage("*cannot exceed 24 hours*");
+                .WithMessage("*more then 24 hours*");
         }
 
         [Fact(DisplayName = "When edit window is less than one hour should throw business rule violation exception")]
@@ -267,7 +267,7 @@ namespace Discounts.Application.Tests.GlobalSettings
 
             // Assert
             await act.Should().ThrowAsync<BusinessRuleViolationException>()
-                .WithMessage("*cannot exceed 7 days*");
+                .WithMessage("*more then 7 days*");
         }
 
         [Fact(DisplayName = "When settings do not exist should throw not found exception")]

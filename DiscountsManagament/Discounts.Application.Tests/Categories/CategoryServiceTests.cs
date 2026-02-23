@@ -133,7 +133,7 @@ namespace Discounts.Application.Tests.Categories
 
             _unitOfWorkMock.Setup(x => x.Categories.GetByIdAsync(1, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(category);
-            _unitOfWorkMock.Setup(x => x.Categories.NameExistsAsync("Travel", It.IsAny<CancellationToken>()))
+            _unitOfWorkMock.Setup(x => x.Categories.NameExistsAsync("Travel", category.Id,It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
             // Act

@@ -20,5 +20,12 @@ namespace Discounts.Infrustructure.Repositories
 
         public async Task<bool> NameExistsAsync(string name, CancellationToken cancellationToken = default) =>
             await _dbSet.AnyAsync(c => c.Name == name, cancellationToken).ConfigureAwait(false);
+
+        public async Task<bool> NameExistsAsync(string name, int excludeCategoryId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Categories
+                .Where(c => !c.IsDeleted && c.Name == name && c.Id != excludeCategoryId)
+                .AnyAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 }
