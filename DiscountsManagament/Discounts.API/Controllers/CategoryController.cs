@@ -15,10 +15,13 @@ namespace Discounts.API.Controllers
     {
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryService categoryService) => _categoryService = categoryService;
+        public CategoryController(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
 
-        // ── Public ────────────────────────────────────────────────────────────────
 
+        // anyone has access to this
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetActiveCategories(CancellationToken cancellationToken)
@@ -35,8 +38,8 @@ namespace Discounts.API.Controllers
             return Ok(result);
         }
 
-        // ── Admin ─────────────────────────────────────────────────────────────────
 
+        // admin
         [HttpGet("all")]
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAllCategories(

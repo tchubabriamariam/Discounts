@@ -15,7 +15,10 @@ namespace Discounts.API.Controllers
     {
         private readonly IAuthService _authService;
 
-        public AuthController(IAuthService authService) => _authService = authService;
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
 
         [HttpPost("register/customer")]
         public async Task<IActionResult> RegisterCustomer([FromBody] RegisterCustomerRequestDto request,

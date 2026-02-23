@@ -7,8 +7,8 @@ namespace Discounts.Worker.BackgroundWorkers
 {
     public class ReservationCleanupWorker : BackgroundService
     {
-        private readonly TimeSpan
-            _interval = TimeSpan.FromMinutes(5); // did not use schedule because this is much simpler for this case
+        // did not use schedule because this is much simpler for this case
+        private readonly TimeSpan _interval = TimeSpan.FromMinutes(5);
 
         private readonly ILogger<ReservationCleanupWorker> _logger;
         private readonly IServiceProvider _serviceProvider;
@@ -46,6 +46,7 @@ namespace Discounts.Worker.BackgroundWorkers
         {
             using (var scope = _serviceProvider.CreateAsyncScope())
             {
+                // this is scope, like fake http request since workers are singleton
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
                 var expiredReservations = await unitOfWork.Reservations.GetExpiredReservationsAsync(cancellationToken)

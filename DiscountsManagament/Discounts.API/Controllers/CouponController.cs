@@ -16,7 +16,10 @@ namespace Discounts.API.Controllers
     {
         private readonly ICouponService _couponService;
 
-        public CouponController(ICouponService couponService) => _couponService = couponService;
+        public CouponController(ICouponService couponService)
+        {
+            _couponService = couponService;
+        }
 
         //customer
         [HttpGet("my-coupons")]

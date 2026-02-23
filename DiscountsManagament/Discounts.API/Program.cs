@@ -21,11 +21,13 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // logging
-builder.Logging.ClearProviders();
+builder.Logging.ClearProviders(); // removing default loggers to avoid duplicate logging
+
+//serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
-builder.Host.UseSerilog();
+builder.Host.UseSerilog(); // replacing default logging with serilog
 
 builder.Services.AddControllers();
 
@@ -88,6 +90,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// swagger
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
@@ -169,7 +172,7 @@ catch (Exception ex)
 }
 finally
 {
-    await Log.CloseAndFlushAsync();
+    await Log.CloseAndFlushAsync(); // ensuring everything is written, nothing is lost
 }
 
 

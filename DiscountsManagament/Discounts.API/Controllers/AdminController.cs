@@ -17,8 +17,10 @@ namespace Discounts.API.Controllers
     {
         private readonly IAdminService _adminService;
 
-        public AdminController(IAdminService adminService) => _adminService = adminService;
-
+        public AdminController(IAdminService adminService)
+        {
+            _adminService = adminService;
+        }
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers(
             [FromQuery] string? roleFilter,
@@ -49,28 +51,28 @@ namespace Discounts.API.Controllers
         public async Task<IActionResult> BlockUser(string id, CancellationToken cancellationToken)
         {
             var result = await _adminService.BlockUserAsync(id, cancellationToken).ConfigureAwait(false);
-            return Ok(new { message = "User blocked successfully.", user = result });
+            return Ok(new { message = "User blocked successfully", user = result });
         }
 
         [HttpPost("users/{id}/unblock")]
         public async Task<IActionResult> UnblockUser(string id, CancellationToken cancellationToken)
         {
             var result = await _adminService.UnblockUserAsync(id, cancellationToken).ConfigureAwait(false);
-            return Ok(new { message = "User unblocked successfully.", user = result });
+            return Ok(new { message = "User unblocked successfully", user = result });
         }
 
         [HttpPost("users/{id}/make-admin")]
         public async Task<IActionResult> MakeAdmin(string id, CancellationToken cancellationToken)
         {
             var result = await _adminService.MakeAdminAsync(id, cancellationToken).ConfigureAwait(false);
-            return Ok(new { message = "User promoted to admin successfully.", user = result });
+            return Ok(new { message = "User promoted to admin successfully", user = result });
         }
 
         [HttpPost("users/{id}/remove-admin")]
         public async Task<IActionResult> RemoveAdmin(string id, CancellationToken cancellationToken)
         {
             var result = await _adminService.RemoveAdminAsync(id, cancellationToken).ConfigureAwait(false);
-            return Ok(new { message = "Admin role removed successfully.", user = result });
+            return Ok(new { message = "Admin role removed successfully", user = result });
         }
 
         [HttpDelete("users/{id}")]
@@ -94,7 +96,7 @@ namespace Discounts.API.Controllers
         public async Task<IActionResult> VerifyMerchant(int merchantId, CancellationToken cancellationToken)
         {
             await _adminService.VerifyMerchantAsync(merchantId, cancellationToken);
-            return Ok(new { message = "Merchant verified successfully." });
+            return Ok(new { message = "Merchant verified successfully" });
         }
     }
 }

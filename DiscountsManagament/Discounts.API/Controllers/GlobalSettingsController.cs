@@ -16,9 +16,10 @@ namespace Discounts.API.Controllers
     {
         private readonly IGlobalSettingsService _globalSettingsService;
 
-        public GlobalSettingsController(IGlobalSettingsService globalSettingsService) =>
+        public GlobalSettingsController(IGlobalSettingsService globalSettingsService)
+        {
             _globalSettingsService = globalSettingsService;
-
+        }
         [HttpGet]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Merchant}")]
         public async Task<IActionResult> GetGlobalSettings(CancellationToken cancellationToken)
@@ -37,7 +38,7 @@ namespace Discounts.API.Controllers
             var result = await _globalSettingsService.UpdateGlobalSettingsAsync(adminUserId, request, cancellationToken)
                 .ConfigureAwait(false);
 
-            return Ok(new { message = "Global settings updated successfully.", settings = result });
+            return Ok(new { message = "Global settings updated successfully", settings = result });
         }
     }
 }

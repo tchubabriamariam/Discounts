@@ -17,9 +17,10 @@ namespace Discounts.API.Controllers
     {
         private readonly IReservationService _reservationService;
 
-        public ReservationController(IReservationService reservationService) =>
+        public ReservationController(IReservationService reservationService)
+        {
             _reservationService = reservationService;
-
+        }
         [HttpPost]
         public async Task<IActionResult> CreateReservation(
             [FromBody] CreateReservationRequestDto request,

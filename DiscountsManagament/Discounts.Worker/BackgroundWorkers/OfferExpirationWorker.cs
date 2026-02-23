@@ -7,8 +7,8 @@ namespace Discounts.Worker.BackgroundWorkers
 {
     public class OfferExpirationWorker : BackgroundService
     {
-        private readonly TimeSpan
-            _interval = TimeSpan.FromHours(1); // since offer has hours until experation i used this instead of schedule
+        // since offer has hours until experation i used this instead of schedule
+        private readonly TimeSpan _interval = TimeSpan.FromHours(1);
 
         private readonly ILogger<OfferExpirationWorker> _logger;
         private readonly IServiceProvider _serviceProvider;

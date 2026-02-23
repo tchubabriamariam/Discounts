@@ -22,10 +22,9 @@ catch (Exception ex)
     Console.WriteLine($"Worker failed to start: {ex.Message}");
     throw;
 }
-
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
-        .UseWindowsService()
+        .UseWindowsService() //can run in the background even when no one is logged in to the pc
         .ConfigureServices((hostContext, services) =>
         {
             // Database

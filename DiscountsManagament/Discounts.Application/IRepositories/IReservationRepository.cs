@@ -17,7 +17,6 @@ namespace Discounts.Application.IRepositories
             CancellationToken cancellationToken = default);
 
         // status is active but reservation is expired
-        Task<IEnumerable<Reservation>>
-            GetExpiredReservationsAsync(CancellationToken cancellationToken = default); // used by worker
+        Task<IEnumerable<Reservation>> GetExpiredReservationsAsync(CancellationToken cancellationToken = default); // used by worker
     }
 }

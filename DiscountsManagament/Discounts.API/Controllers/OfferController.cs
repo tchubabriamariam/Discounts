@@ -16,7 +16,10 @@ namespace Discounts.API.Controllers
     {
         private readonly IOfferService _offerService;
 
-        public OfferController(IOfferService offerService) => _offerService = offerService;
+        public OfferController(IOfferService offerService)
+        {
+            _offerService = offerService;
+        }
 
         // customer
 
