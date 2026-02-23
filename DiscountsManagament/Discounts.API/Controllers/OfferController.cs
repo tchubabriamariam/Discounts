@@ -113,5 +113,15 @@ namespace Discounts.API.Controllers
                 .ConfigureAwait(false);
             return Ok(result);
         }
+
+
+
+        // [HttpDelete("{id:int}")]
+        // [Authorize(Roles = Roles.Admin)]
+        // public async Task<IActionResult> DeleteOffer(int id, CancellationToken cancellationToken)
+        // {
+        //     await _offerService.DeleteOfferAsync(id, cancellationToken);
+        //     return NoContent();
+        // }
     }
 }

@@ -228,5 +228,17 @@ namespace Discounts.Application.Services.Implementations
 
             return offer.Adapt<OfferResponseDto>();
         }
+
+
+        // this was not in requerements but i think can be useful
+
+        // public async Task DeleteOfferAsync(int offerId, CancellationToken cancellationToken = default)
+        // {
+        //     var offer = await _unitOfWork.Offers.GetByIdAsync(offerId, cancellationToken).ConfigureAwait(false);
+        //     if (offer is null) throw new NotFoundException("Offer", offerId);
+        //
+        //     _unitOfWork.Offers.SoftDelete(offer);
+        //     await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        // }
     }
 }

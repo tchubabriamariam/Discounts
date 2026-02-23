@@ -1,8 +1,72 @@
-﻿@{
+﻿@model IEnumerable<Discounts.Application.DTOs.Offers.OfferResponseDto>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <h2>Browse Offers</h2>
+
+    <form method="get" asp-action="Index" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <select name="categoryId" class="form-select">
+                <option value="">All Categories</option>
+                @foreach (var category in ViewBag.Categories as IEnumerable<Discounts.Application.DTOs.Categories.CategoryResponseDto>)
+                {
+                    <option value="@category.Id" selected="@(ViewBag.SelectedCategoryId == category.Id)">
+                        @category.Name
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="minPrice" class="form-control"
+                   placeholder="Min Price" value="@ViewBag.MinPrice" />
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="maxPrice" class="form-control"
+                   placeholder="Max Price" value="@ViewBag.MaxPrice" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </form>
+
+    <!-- Offers grid -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No offers found.</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var offer in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(offer.ImageUrl))
+                        {
+                            <img src="@offer.ImageUrl" class="card-img-top" style="height:200px; object-fit:cover;" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@offer.Title</h5>
+                            <p class="text-muted">@offer.CategoryName</p>
+                            <p>
+                                <s class="text-muted">₾@offer.OriginalPrice</s>
+                                <span class="text-success fw-bold ms-2">₾@offer.DiscountedPrice</span>
+                            </p>
+                            <p class="text-muted small">@offer.RemainingCoupons coupons left</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Offers" asp-action="Details"
+                               asp-route-id="@offer.Id" class="btn btn-primary w-100">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>

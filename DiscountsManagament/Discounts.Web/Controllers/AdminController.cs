@@ -23,6 +23,7 @@ namespace Discounts.Web.Controllers
             _categoryService = categoryService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Dashboard()
         {
             var users = await _adminService.GetAllUsersAsync(null);
@@ -44,6 +45,7 @@ namespace Discounts.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyMerchant(int merchantId, CancellationToken cancellationToken)
         {
             await _adminService.VerifyMerchantAsync(merchantId, cancellationToken);

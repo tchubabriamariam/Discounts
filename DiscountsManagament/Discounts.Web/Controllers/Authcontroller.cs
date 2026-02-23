@@ -200,7 +200,7 @@ namespace Discounts.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize] // any logged in user can access
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {

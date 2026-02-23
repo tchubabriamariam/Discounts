@@ -81,6 +81,7 @@ namespace Discounts.Application.Services.Implementations
             settings.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.GlobalSettings.UpdateAsync(settings, cancellationToken).ConfigureAwait(false);
+            // here should bve save but globalsettings save internally minor inconsistency
 
             _logger.LogInformation(
                 "Global settings updated by admin {AdminEmail}: ReservationDuration {OldDuration}min → {NewDuration}min, EditWindow {OldWindow}hrs → {NewWindow}hrs",

@@ -28,10 +28,16 @@ namespace Discounts.Application.Services.Interfaces
         Task<OfferResponseDto> RejectOfferAsync(string adminUserId, int offerId, RejectOfferRequestDto request,
             CancellationToken cancellationToken = default);
 
+        // extra added method
+        // Task DeleteOfferAsync(int offerId, CancellationToken cancellationToken = default);
+
         // Customer
         Task<IEnumerable<OfferResponseDto>> GetApprovedOffersAsync(int? categoryId, decimal? minPrice,
             decimal? maxPrice, CancellationToken cancellationToken = default);
 
         Task<OfferResponseDto> GetOfferDetailsAsync(int offerId, CancellationToken cancellationToken = default);
+
+
+
     }
 }

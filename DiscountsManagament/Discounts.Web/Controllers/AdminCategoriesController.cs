@@ -31,21 +31,22 @@ namespace Discounts.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] // saves from hackers fake webpages
         public async Task<IActionResult> Create(CreateCategoryRequestDto request)
         {
+            // if fluentvalitaion found any errors i show form again with view
             if (!ModelState.IsValid) return View(request);
 
             try
             {
                 await _categoryService.CreateCategoryAsync(request);
-                TempData["SuccessMessage"] = "Category created successfully!";
-                return RedirectToAction(nameof(Index));
+                TempData["SuccessMessage"] = "Category created successfully!"; // save massage which survives redirect
+                return RedirectToAction(nameof(Index)); // goes to index()
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
-                return View(request);
+                ModelState.AddModelError(string.Empty, ex.Message); // service throws exception add to errors
+                return View(request); // display view with errors
             }
         }
 
