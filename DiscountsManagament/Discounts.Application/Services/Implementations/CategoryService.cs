@@ -58,7 +58,7 @@ namespace Discounts.Application.Services.Implementations
                 if (nameExists) throw new AlreadyExistsException("Category", "Name", request.Name);
             }
 
-            request.Adapt(category);
+            request.Adapt(category); // updates autmatically into category
 
             _unitOfWork.Categories.Update(category);
             await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

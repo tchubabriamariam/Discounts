@@ -14,6 +14,12 @@ namespace Discounts.Application.Services.Implementations
 {
     public class AdminService : IAdminService
     {
+        // admin operations are cross-cutting
+        // they manage all users and don't fit into entity-based services like OfferService or CouponService
+        // Merchant and Customer operations are grouped by entity rather than role:
+        // Merchants create offers --> OfferService
+        // Customers make reservations --> ReservationService
+        // both use coupons --> CouponService
         private readonly ILogger<AdminService> _logger; //record actions
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<ApplicationUser> _userManager; // handling passwords, roles, normilized emails

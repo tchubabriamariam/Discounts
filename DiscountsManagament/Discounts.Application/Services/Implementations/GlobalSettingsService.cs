@@ -36,7 +36,7 @@ namespace Discounts.Application.Services.Implementations
 
             ApplicationUser? updatedByAdmin = null;
 
-            if (!string.IsNullOrEmpty(settings.UpdatedByAdminId))
+            if (!string.IsNullOrEmpty(settings.UpdatedByAdminId)) // check which admin updated last
                 updatedByAdmin = await _userManager.FindByIdAsync(settings.UpdatedByAdminId).ConfigureAwait(false);
 
             var response = settings.Adapt<GlobalSettingsResponseDto>();
@@ -48,30 +48,30 @@ namespace Discounts.Application.Services.Implementations
         public async Task<GlobalSettingsResponseDto> UpdateGlobalSettingsAsync(string adminUserId,
             UpdateGlobalSettingsRequestDto request, CancellationToken cancellationToken = default)
         {
-            var admin = await _userManager.FindByIdAsync(adminUserId).ConfigureAwait(false);
+            var admin = await _userManager.FindByIdAsync(adminUserId).ConfigureAwait(false); // update should happen with admin only
 
             if (admin is null) throw new NotFoundException("Admin user", adminUserId);
 
             var roles = await _userManager.GetRolesAsync(admin).ConfigureAwait(false);
 
             if (!roles.Contains(Roles.Admin))
-                throw new ForbiddenException("Only administrators can update global settings.");
+                throw new ForbiddenException("Only administrators can update global settings");
 
             if (request.ReservationDurationMinutes < 5)
-                throw new BusinessRuleViolationException("Reservation duration must be at least 5 minutes.");
+                throw new BusinessRuleViolationException("Reservation duration must be at least 5 minutes");
 
             if (request.ReservationDurationMinutes > 1440)
-                throw new BusinessRuleViolationException("Reservation duration cannot exceed 24 hours (1440 minutes).");
+                throw new BusinessRuleViolationException("Reservation duration can't be more then 24 hours (1440 minutes)");
 
             if (request.MerchantEditWindowHours < 1)
-                throw new BusinessRuleViolationException("Merchant edit window must be at least 1 hour.");
+                throw new BusinessRuleViolationException("Merchant edit window must be at least 1 hour");
 
             if (request.MerchantEditWindowHours > 168)
-                throw new BusinessRuleViolationException("Merchant edit window cannot exceed 7 days (168 hours).");
+                throw new BusinessRuleViolationException("Merchant edit window can't be more then 7 days (168 hours)");
 
             var settings = await _unitOfWork.GlobalSettings.GetAsync(cancellationToken).ConfigureAwait(false);
 
-            if (settings is null) throw new NotFoundException("Global settings not found.");
+            if (settings is null) throw new NotFoundException("Global settings not found");
 
             var oldReservationDuration = settings.ReservationDurationMinutes;
             var oldEditWindow = settings.MerchantEditWindowHours;

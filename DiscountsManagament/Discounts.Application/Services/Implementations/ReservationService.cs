@@ -179,13 +179,14 @@ namespace Discounts.Application.Services.Implementations
 
             if (reservation.Status != ReservationStatus.Active)
                 throw new BusinessRuleViolationException(
-                    $"Cannot cancel a {reservation.Status} reservation. Only Active reservations can be cancelled.");
+                    $"Cannot cancel a {reservation.Status} reservation. Only Active reservations can be cancelled");
 
             var offer = await _unitOfWork.Offers.GetByIdAsync(reservation.OfferId, cancellationToken)
                 .ConfigureAwait(false);
 
             if (offer is not null)
             {
+                // someone else can use this coupons
                 offer.RemainingCoupons += reservation.Quantity;
                 _unitOfWork.Offers.Update(offer);
             }
@@ -213,6 +214,7 @@ namespace Discounts.Application.Services.Implementations
 
         private static string GenerateUniqueCouponCode()
         {
+            // creates 12 character long alphanumeric code
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
             return new string(Enumerable.Repeat(chars, 12)

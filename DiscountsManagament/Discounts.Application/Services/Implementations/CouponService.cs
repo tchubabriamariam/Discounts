@@ -53,7 +53,7 @@ namespace Discounts.Application.Services.Implementations
 
             if (coupon is null) throw new NotFoundException("Coupon", code);
 
-            if (coupon.UserId != userId) throw new ForbiddenException("You do not own this coupon.");
+            if (coupon.UserId != userId) throw new ForbiddenException("You do not own this coupon."); // making sure merchant who created the offer verifies it
 
             return coupon.Adapt<CouponResponseDto>();
         }

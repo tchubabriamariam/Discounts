@@ -16,6 +16,7 @@ namespace Discounts.Application.Services.Implementations
 {
     public class AuthService : IAuthService
     {
+        // this contains business logic
         private readonly IConfiguration _configuration;
         private readonly ILogger<AuthService> _logger;
         private readonly IUnitOfWork _unitOfWork;
@@ -189,6 +190,7 @@ namespace Discounts.Application.Services.Implementations
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token); // turn into long string
 
+            // this is better for decoding
             return new AuthResponseDto
             {
                 Token = tokenString,

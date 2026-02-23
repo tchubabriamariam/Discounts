@@ -9,6 +9,7 @@ using Discounts.Domain.Enums;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Discounts.Application.Services.Implementations
 {
@@ -28,6 +29,7 @@ namespace Discounts.Application.Services.Implementations
             _logger = logger;
         }
 
+        // merchant part
         public async Task<OfferResponseDto> CreateOfferAsync(string merchantUserId, CreateOfferRequestDto request,
             CancellationToken cancellationToken = default)
         {
@@ -39,19 +41,19 @@ namespace Discounts.Application.Services.Implementations
             if (!merchant.IsVerified)
             {
                 throw new ForbiddenException(
-                    "Your merchant account is pending verification. " +
-                    "Please wait for admin approval before creating offers.");
+                    "Your merchant account is pending verification, " +
+                    "Please wait for admin approval before creating offers");
             }
             var category = await _unitOfWork.Categories.GetByIdAsync(request.CategoryId, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (category is null) throw new InvalidOperationException("Category not found.");
+            if (category is null) throw new InvalidOperationException("Category not found");
 
             if (request.DiscountedPrice >= request.OriginalPrice)
-                throw new InvalidOperationException("Discounted price must be less than original price.");
+                throw new InvalidOperationException("Discounted price must be less than original price");
 
             if (request.EndDate <= request.StartDate)
-                throw new InvalidOperationException("End date must be after start date.");
+                throw new InvalidOperationException("End date must be after start date");
 
             var offer = request.Adapt<Offer>();
             offer.MerchantId = merchant.Id;
@@ -75,31 +77,31 @@ namespace Discounts.Application.Services.Implementations
             var merchant = await _unitOfWork.Merchants.GetByUserIdAsync(merchantUserId, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (merchant is null) throw new InvalidOperationException("Merchant profile not found.");
+            if (merchant is null) throw new InvalidOperationException("Merchant profile not found");
 
             var offer = await _unitOfWork.Offers.GetWithDetailsAsync(offerId, cancellationToken).ConfigureAwait(false);
 
-            if (offer is null) throw new InvalidOperationException("Offer not found.");
+            if (offer is null) throw new InvalidOperationException("Offer not found");
 
-            if (offer.MerchantId != merchant.Id) throw new UnauthorizedAccessException("You do not own this offer.");
+            if (offer.MerchantId != merchant.Id) throw new UnauthorizedAccessException("You do not own this offer");
 
             var settings = await _unitOfWork.GlobalSettings.GetAsync(cancellationToken).ConfigureAwait(false);
             var editDeadline = offer.CreatedAt.AddHours(settings.MerchantEditWindowHours);
 
             if (DateTime.UtcNow > editDeadline)
                 throw new InvalidOperationException(
-                    $"Edit window has expired. Offers can only be edited within {settings.MerchantEditWindowHours} hours of creation.");
+                    $"Edit window has expired. Offers can only be edited within {settings.MerchantEditWindowHours} hours of creation");
 
             var category = await _unitOfWork.Categories.GetByIdAsync(request.CategoryId, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (category is null) throw new InvalidOperationException("Category not found.");
+            if (category is null) throw new InvalidOperationException("Category not found");
 
             if (request.DiscountedPrice >= request.OriginalPrice)
-                throw new InvalidOperationException("Discounted price must be less than original price.");
+                throw new InvalidOperationException("Discounted price must be less than original price");
 
             if (request.EndDate <= request.StartDate)
-                throw new InvalidOperationException("End date must be after start date.");
+                throw new InvalidOperationException("End date must be after start date");
 
             request.Adapt(offer);
             offer.Category = category;
@@ -129,34 +131,22 @@ namespace Discounts.Application.Services.Implementations
         public async Task<IEnumerable<SalesHistoryResponseDto>> GetSalesHistoryAsync(string merchantUserId,
             CancellationToken cancellationToken = default)
         {
+            // i optimized this, instead of 2 loops i used this
             var merchant = await _unitOfWork.Merchants.GetByUserIdAsync(merchantUserId, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (merchant is null) throw new InvalidOperationException("Merchant profile not found.");
+            if (merchant is null) throw new InvalidOperationException("Merchant profile not found");
 
-            var offers = await _unitOfWork.Offers.GetByMerchantIdAsync(merchant.Id, cancellationToken)
+            var coupons = await _unitOfWork.Coupons
+                .Query()
+                .Include(c => c.Offer)
+                .Include(c => c.User)
+                .Where(c => c.Offer.MerchantId == merchant.Id)
+                .OrderByDescending(c => c.PurchasedAt)
+                .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
-            var result = new List<SalesHistoryResponseDto>();
 
-            foreach (var offer in offers)
-            {
-                var coupons = await _unitOfWork.Coupons.GetByOfferIdAsync(offer.Id, cancellationToken)
-                    .ConfigureAwait(false);
-
-                foreach (var coupon in coupons)
-                {
-                    var user = await _userManager.FindByIdAsync(coupon.UserId).ConfigureAwait(false);
-
-                    var salesEntry = coupon.Adapt<SalesHistoryResponseDto>();
-                    salesEntry.CustomerFullName = user is null ? "Unknown" : $"{user.FirstName} {user.LastName}";
-                    salesEntry.CustomerEmail = user?.Email ?? string.Empty;
-                    salesEntry.OfferTitle = offer.Title;
-
-                    result.Add(salesEntry);
-                }
-            }
-
-            return result;
+            return coupons.Adapt<IEnumerable<SalesHistoryResponseDto>>();
         }
 
         // admin part
@@ -174,10 +164,10 @@ namespace Discounts.Application.Services.Implementations
         {
             var offer = await _unitOfWork.Offers.GetWithDetailsAsync(offerId, cancellationToken).ConfigureAwait(false);
 
-            if (offer is null) throw new InvalidOperationException("Offer not found.");
+            if (offer is null) throw new InvalidOperationException("Offer not found");
 
             if (offer.Status != OfferStatus.Pending)
-                throw new InvalidOperationException("Only pending offers can be approved.");
+                throw new InvalidOperationException("Only pending offers can be approved");
 
             offer.Status = OfferStatus.Approved;
             offer.ApprovedAt = DateTime.UtcNow;
@@ -196,13 +186,14 @@ namespace Discounts.Application.Services.Implementations
         {
             var offer = await _unitOfWork.Offers.GetWithDetailsAsync(offerId, cancellationToken).ConfigureAwait(false);
 
-            if (offer is null) throw new InvalidOperationException("Offer not found.");
+            if (offer is null) throw new InvalidOperationException("Offer not found");
 
             if (offer.Status != OfferStatus.Pending)
-                throw new InvalidOperationException("Only pending offers can be rejected.");
+                throw new InvalidOperationException("Only pending offers can be rejected");
 
             offer.Status = OfferStatus.Rejected;
             offer.RejectionReason = request.Reason;
+            // and here i dont link admin which makes it null
 
             _unitOfWork.Offers.Update(offer);
             await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
