@@ -1,6 +1,7 @@
 // Copyright (C) TBC Bank. All Rights Reserved.
 
 using Discounts.Application.DTOs.Offers;
+using Discounts.Application.Exceptions;
 using Discounts.Application.IRepositories;
 using Discounts.Application.Services.Interfaces;
 using Discounts.Domain.Entity;
@@ -35,6 +36,12 @@ namespace Discounts.Application.Services.Implementations
 
             if (merchant is null) throw new InvalidOperationException("Merchant profile not found.");
 
+            if (!merchant.IsVerified)
+            {
+                throw new ForbiddenException(
+                    "Your merchant account is pending verification. " +
+                    "Please wait for admin approval before creating offers.");
+            }
             var category = await _unitOfWork.Categories.GetByIdAsync(request.CategoryId, cancellationToken)
                 .ConfigureAwait(false);
 

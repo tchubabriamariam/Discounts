@@ -1,6 +1,7 @@
 // Copyright (C) TBC Bank. All Rights Reserved.
 
 using Discounts.Application.DTOs.Admin;
+using Discounts.Domain.Entity;
 
 namespace Discounts.Application.Services.Interfaces
 {
@@ -19,5 +20,9 @@ namespace Discounts.Application.Services.Interfaces
         Task<UserResponseDto> MakeAdminAsync(string userId, CancellationToken cancellationToken = default);
         Task<UserResponseDto> RemoveAdminAsync(string userId, CancellationToken cancellationToken = default);
         Task DeleteUserAsync(string userId, CancellationToken cancellationToken = default);
+
+        // merchant verification
+        Task VerifyMerchantAsync(int merchantId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Merchant>> GetPendingMerchantsAsync(CancellationToken cancellationToken = default);
     }
 }

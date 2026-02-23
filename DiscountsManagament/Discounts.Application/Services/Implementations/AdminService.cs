@@ -203,6 +203,16 @@ namespace Discounts.Application.Services.Implementations
             if (roles.Contains(Roles.Admin))
                 throw new BusinessRuleViolationException("Cannot delete an admin user. Remove admin role first.");
 
+            // soft delete merchant too
+            var merchant = await _unitOfWork.Merchants.GetByUserIdAsync(userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (merchant is not null)
+            {
+                merchant.IsDeleted = true;
+                merchant.DeletedAt = DateTime.UtcNow;
+                _unitOfWork.Merchants.Update(merchant);
+            }
             user.IsDeleted = true;
             user.DeletedAt = DateTime.UtcNow;
             user.IsActive = false;
@@ -224,6 +234,29 @@ namespace Discounts.Application.Services.Implementations
             userDto.Roles = roles;
 
             return userDto;
+        }
+
+
+        // merchant verification
+        public async Task VerifyMerchantAsync(int merchantId, CancellationToken cancellationToken = default)
+        {
+            var merchant = await _unitOfWork.Merchants.GetByIdAsync(merchantId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (merchant is null)
+                throw new NotFoundException("Merchant", merchantId);
+
+            merchant.IsVerified = true;
+            _unitOfWork.Merchants.Update(merchant);
+            await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            _logger.LogInformation("Merchant {MerchantId} verified", merchantId);
+        }
+
+        public async Task<IEnumerable<Merchant>> GetPendingMerchantsAsync(CancellationToken cancellationToken = default)
+        {
+            return await _unitOfWork.Merchants.FindAsync(m => !m.IsVerified, cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }

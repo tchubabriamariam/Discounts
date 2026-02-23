@@ -79,5 +79,22 @@ namespace Discounts.API.Controllers
             await _adminService.DeleteUserAsync(id, cancellationToken).ConfigureAwait(false);
             return NoContent();
         }
+
+        // merchant authoization
+        [HttpGet("merchants/pending")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetPendingMerchants(CancellationToken cancellationToken)
+        {
+            var merchants = await _adminService.GetPendingMerchantsAsync(cancellationToken);
+            return Ok(merchants);
+        }
+
+        [HttpPost("merchants/{merchantId}/verify")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> VerifyMerchant(int merchantId, CancellationToken cancellationToken)
+        {
+            await _adminService.VerifyMerchantAsync(merchantId, cancellationToken);
+            return Ok(new { message = "Merchant verified successfully." });
+        }
     }
 }

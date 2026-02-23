@@ -37,5 +37,18 @@ namespace Discounts.Web.Controllers
 
             return View();
         }
+        public async Task<IActionResult> PendingMerchants(CancellationToken cancellationToken)
+        {
+            var merchants = await _adminService.GetPendingMerchantsAsync(cancellationToken);
+            return View(merchants);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyMerchant(int merchantId, CancellationToken cancellationToken)
+        {
+            await _adminService.VerifyMerchantAsync(merchantId, cancellationToken);
+            TempData["SuccessMessage"] = "Merchant verified successfully!";
+            return RedirectToAction("PendingMerchants");
+        }
     }
 }

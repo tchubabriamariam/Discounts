@@ -1,6 +1,7 @@
 // Copyright (C) TBC Bank.All Rights Reserved.
 
 using Discounts.Application.DTOs.Admin;
+using Discounts.Application.IRepositories;
 using Discounts.Application.Services.Interfaces;
 using Discounts.Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
@@ -14,11 +15,14 @@ namespace Discounts.Web.Controllers
     {
         private readonly IAdminService _adminService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AdminUsersController(IAdminService adminService, UserManager<ApplicationUser> userManager)
+
+        public AdminUsersController(IAdminService adminService, UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork)
         {
             _adminService = adminService;
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -125,6 +129,24 @@ namespace Discounts.Web.Controllers
                     throw new Exception($"User already has the {role} role.");
 
                 await _userManager.AddToRoleAsync(user, role);
+                if (role == Roles.Merchant)
+                {
+                    var existingMerchant = await _unitOfWork.Merchants.GetByUserIdAsync(id);
+
+                    if (existingMerchant is null)
+                    {
+                        var merchant = new Merchant
+                        {
+                            UserId = id,
+                            CompanyName = $"{user.FirstName} {user.LastName}",
+                            ContactEmail = user.Email!,
+                            IsVerified = false
+                        };
+                        await _unitOfWork.Merchants.AddAsync(merchant);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+
                 TempData["SuccessMessage"] = $"Role '{role}' added successfully.";
             }
             catch (Exception ex)

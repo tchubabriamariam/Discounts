@@ -1,0 +1,42 @@
+@model IEnumerable<Discounts.Domain.Entity.Merchant>
+
+<div class="container mt-4">
+    <h1>Pending Merchant Verification</h1>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No merchants pending verification.</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Contact Email</th>
+                <th>Phone</th>
+                <th>Registered</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var merchant in Model)
+            {
+                <tr>
+                    <td>@merchant.CompanyName</td>
+                    <td>@merchant.ContactEmail</td>
+                    <td>@merchant.PhoneNumber</td>
+                    <td>@merchant.CreatedAt.ToString("dd MMM yyyy")</td>
+                    <td>
+                        <form asp-action="VerifyMerchant" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="merchantId" value="@merchant.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">✓ Verify</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
