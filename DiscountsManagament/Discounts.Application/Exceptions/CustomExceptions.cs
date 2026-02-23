@@ -2,6 +2,7 @@
 
 namespace Discounts.Application.Exceptions
 {
+    // middleware catches this exceptions
     // Base exception for the application
     public class DiscountsException : Exception
     {
@@ -63,7 +64,7 @@ namespace Discounts.Application.Exceptions
         {
         }
 
-        public Dictionary<string, string[]>? Errors { get; set; }
+        public Dictionary<string, string[]>? Errors { get; set; } // lists every mistake
     }
 
     // 400 Business rule violations

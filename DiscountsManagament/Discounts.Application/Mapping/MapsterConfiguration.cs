@@ -83,7 +83,7 @@ namespace Discounts.Application.Mapping
 
             TypeAdapterConfig<UpdateGlobalSettingsRequestDto, GlobalSettings>
                 .NewConfig()
-                .Ignore(dest => dest.Id)
+                .Ignore(dest => dest.Id) // no accident overwrite
                 .Ignore(dest => dest.UpdatedAt)
                 .Ignore(dest => dest.UpdatedByAdminId)
                 .Ignore(dest => dest.UpdatedByAdmin);

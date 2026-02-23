@@ -14,9 +14,9 @@ namespace Discounts.Application.Services.Implementations
 {
     public class AdminService : IAdminService
     {
-        private readonly ILogger<AdminService> _logger;
+        private readonly ILogger<AdminService> _logger; //record actions
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager; // handling passwords, roles, normilized emails
 
         public AdminService(
             UserManager<ApplicationUser> userManager,
@@ -28,6 +28,7 @@ namespace Discounts.Application.Services.Implementations
             _logger = logger;
         }
 
+        // get users, uses filter for roles
         public async Task<IEnumerable<UserResponseDto>> GetAllUsersAsync(string? roleFilter,
             CancellationToken cancellationToken = default)
         {
@@ -44,10 +45,10 @@ namespace Discounts.Application.Services.Implementations
                 var userDto = await MapToUserResponseAsync(user, roles.ToList()).ConfigureAwait(false);
                 result.Add(userDto);
             }
-
             return result.OrderBy(u => u.Email);
         }
 
+        // returns user with specific guid
         public async Task<UserResponseDto> GetUserByIdAsync(string userId,
             CancellationToken cancellationToken = default)
         {
@@ -55,11 +56,14 @@ namespace Discounts.Application.Services.Implementations
 
             if (user is null) throw new NotFoundException("User", userId);
 
+            // users and roles are in different tables
             var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
 
+            // if user is merchant needs extra info
             return await MapToUserResponseAsync(user, roles.ToList()).ConfigureAwait(false);
         }
 
+        // updates existing user
         public async Task<UserResponseDto> UpdateUserAsync(string userId, UpdateUserRequestDto request,
             CancellationToken cancellationToken = default)
         {
@@ -83,7 +87,7 @@ namespace Discounts.Application.Services.Implementations
             user.LastName = request.LastName;
             user.Balance = request.Balance;
 
-            var result = await _userManager.UpdateAsync(user).ConfigureAwait(false);
+            var result = await _userManager.UpdateAsync(user).ConfigureAwait(false); // send sql update command
 
             if (!result.Succeeded)
             {
@@ -222,6 +226,7 @@ namespace Discounts.Application.Services.Implementations
             _logger.LogInformation("User soft deleted by admin: {Email}", user.Email);
         }
 
+        // helper mapper, this is because of merchant mostly
         private async Task<UserResponseDto> MapToUserResponseAsync(ApplicationUser user, List<string> roles)
         {
             if (roles.Contains(Roles.Merchant))
@@ -248,7 +253,7 @@ namespace Discounts.Application.Services.Implementations
 
             merchant.IsVerified = true;
             _unitOfWork.Merchants.Update(merchant);
-            await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false); // we dont use _userManager so save needs to be done
 
             _logger.LogInformation("Merchant {MerchantId} verified", merchantId);
         }

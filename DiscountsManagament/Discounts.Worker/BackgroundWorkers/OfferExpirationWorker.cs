@@ -79,6 +79,27 @@ namespace Discounts.Worker.BackgroundWorkers
                         _logger.LogError(ex, "Error processing offer {OfferId}", offer.Id);
                     }
                 }
+                // added expiring coupons to this worker
+                var expiredCoupons = await unitOfWork.Coupons
+                    .GetExpiredCouponsAsync(cancellationToken)
+                    .ConfigureAwait(false);
+
+                var expiredCouponList = expiredCoupons.ToList();
+
+                if (!expiredCouponList.Any())
+                {
+                    _logger.LogInformation("No expired coupons found at {Time}", DateTime.UtcNow);
+                }
+                else
+                {
+                    _logger.LogInformation("Found {Count} expired coupons to process", expiredCouponList.Count);
+
+                    foreach (var coupon in expiredCouponList)
+                    {
+                        coupon.Status = CouponStatus.Expired;
+                        unitOfWork.Coupons.Update(coupon);
+                    }
+                }
 
                 await unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 

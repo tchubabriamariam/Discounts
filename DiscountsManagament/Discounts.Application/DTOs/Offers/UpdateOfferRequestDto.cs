@@ -4,6 +4,7 @@ namespace Discounts.Application.DTOs.Offers
 {
     public class UpdateOfferRequestDto
     {
+        // when merchant updates the offer, input dto
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int CategoryId { get; set; }

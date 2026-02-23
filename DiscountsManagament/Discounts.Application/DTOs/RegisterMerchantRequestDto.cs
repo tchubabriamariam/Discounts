@@ -4,6 +4,7 @@ namespace Discounts.Application.DTOs
 {
     public class RegisterMerchantRequestDto
     {
+        // same registration but merchant has more fields
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

@@ -4,6 +4,8 @@ namespace Discounts.Application.DTOs.Admin
 {
     public class UserResponseDto
     {
+        // when admin sees all the users in admin dashboard
+        // making sure we don't have null exceptions
         public string Id { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;

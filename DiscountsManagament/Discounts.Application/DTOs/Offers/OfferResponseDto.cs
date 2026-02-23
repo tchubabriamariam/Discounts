@@ -6,6 +6,7 @@ namespace Discounts.Application.DTOs.Offers
 {
     public class OfferResponseDto
     {
+        // used by customers to see offers, this is ouput dto
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

@@ -6,7 +6,7 @@ namespace Discounts.Application.IRepositories
 {
     public interface IGlobalSettingsRepository
     {
-        Task<GlobalSettings> GetAsync(CancellationToken cancellationToken = default);
-        Task UpdateAsync(GlobalSettings settings, CancellationToken cancellationToken = default);
+        Task<GlobalSettings> GetAsync(CancellationToken cancellationToken = default); // get gloval configuration row
+        Task UpdateAsync(GlobalSettings settings, CancellationToken cancellationToken = default); // update new settings
     }
 }

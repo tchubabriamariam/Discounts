@@ -125,15 +125,16 @@ namespace Discounts.Application.Services.Implementations
         public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request,
             CancellationToken cancellationToken = default)
         {
+            // here i say invalid email or passwrod because if someone fake tries to enter we should not give them too much info
             var user = await _userManager.FindByEmailAsync(request.Email).ConfigureAwait(false);
 
-            if (user is null) throw new UnauthorizedAccessException("Invalid email or password.");
+            if (user is null) throw new UnauthorizedAccessException("Invalid email or password");
 
-            if (!user.IsActive) throw new UnauthorizedAccessException("Your account has been deactivated.");
+            if (!user.IsActive) throw new UnauthorizedAccessException("Your account has been deactivated");
 
             var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password).ConfigureAwait(false);
 
-            if (!passwordValid) throw new UnauthorizedAccessException("Invalid email or password.");
+            if (!passwordValid) throw new UnauthorizedAccessException("Invalid email or password");
 
             _logger.LogInformation("User logged in: {Email}", user.Email);
 
@@ -147,29 +148,35 @@ namespace Discounts.Application.Services.Implementations
         private async Task<AuthResponseDto> GenerateJwtTokenAsync(ApplicationUser user)
         {
             var roles = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-            var role = roles.FirstOrDefault() ?? string.Empty;
+            // var role = roles.FirstOrDefault() ?? string.Empty; // they have main role (first added role)
 
             int? merchantId = null;
 
-            if (role == Roles.Merchant)
+            if (roles.Contains(Roles.Merchant))
             {
+                // we need to see which offers merchants own, used when customers verify coupons
                 var merchant = await _unitOfWork.Merchants.GetByUserIdAsync(user.Id).ConfigureAwait(false);
                 merchantId = merchant?.Id;
             }
 
+            // we build claims in here, tokens inside info
             var claims = new List<Claim>
             {
                 new(ClaimTypes.NameIdentifier, user.Id),
                 new(ClaimTypes.Email, user.Email!),
                 new(ClaimTypes.GivenName, user.FirstName),
                 new(ClaimTypes.Surname, user.LastName),
-                new(ClaimTypes.Role, role)
+                // new(ClaimTypes.Role, role) // this is for future authorization by roles
             };
+            foreach (var r in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, r));
+            }
 
-            if (merchantId.HasValue) claims.Add(new Claim("merchantId", merchantId.Value.ToString()));
+            if (merchantId.HasValue) claims.Add(new Claim("merchantId", merchantId.Value.ToString())); // put merchantid into token so dont need database to find the id
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); // using the algorithm from lecture
             var expiry = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryMinutes"]));
 
             var token = new JwtSecurityToken(
@@ -180,7 +187,7 @@ namespace Discounts.Application.Services.Implementations
                 signingCredentials: creds
             );
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token); // turn into long string
 
             return new AuthResponseDto
             {
@@ -188,7 +195,8 @@ namespace Discounts.Application.Services.Implementations
                 Email = user.Email!,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Role = role,
+                // Role = role,
+                Role = string.Join(", ", roles),
                 MerchantId = merchantId,
                 ExpiresAt = expiry
             };

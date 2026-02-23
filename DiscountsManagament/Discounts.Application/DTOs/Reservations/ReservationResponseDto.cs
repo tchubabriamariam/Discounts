@@ -4,6 +4,7 @@ namespace Discounts.Application.DTOs.Reservations
 {
     public class ReservationResponseDto
     {
+        // used when customer wants to see he's/she's reservations
         public int Id { get; set; }
         public int OfferId { get; set; }
         public string OfferTitle { get; set; } = string.Empty;
